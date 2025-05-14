@@ -1,0 +1,71 @@
+<mvc:View
+  controllerName="projectsd2.controller.Dashboard"
+  displayBlock="true"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:tnt="sap.tnt"
+  xmlns:smartTable="sap.ui.comp.smarttable"
+  xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+
+  <Page id="mainPage" showHeader="false">
+    <content>
+      <HBox id="_IDGenHBox1" height="100%" width="100%">
+
+        <!-- SIDEBAR -->
+        <VBox id="_IDGenVBox" width="250px" class="customSidebar" height="100%" alignItems="Center">
+          <Image id="_IDGenImage" src="/images/logo.png" width="120px" />
+          <tnt:NavigationList id="_IDGenNavigationList" itemSelect="onSideNavSelect">
+            <tnt:NavigationListItem id="_IDGenNavigationListItem" text="Dashboard" key="Dashboard" icon="sap-icon://bar-chart" />
+          </tnt:NavigationList>
+        </VBox>
+
+        <!-- MAIN CONTENT -->
+        <VBox width="100%" class="mainContent" id="mainContentVBox">
+          <Bar id="_IDGenBar" design="Header">
+            <contentLeft>
+              <Button id="_IDGenButton" icon="sap-icon://menu2" press="onToggleSidebar" type="Transparent" />
+            </contentLeft>
+            <contentMiddle>
+              <Title id="_IDGenTitle" text="Gestion de transport entrant" level="H3" />
+            </contentMiddle>
+          </Bar>
+
+          <!-- SmartFilterBar -->
+          <smartFilterBar:SmartFilterBar
+            id="smartFilterLivraison"
+            entitySet="ZCDS_livraison"
+            useToolbar="true"
+            showClearOnFB="true"
+            showGoOnFB="true"
+            persistencyKey="smartFilterLivraison">
+            <smartFilterBar:controlConfiguration>
+              <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration1" key="Idlivraison" visibleInAdvancedArea="true" />
+            </smartFilterBar:controlConfiguration>
+          </smartFilterBar:SmartFilterBar>
+
+          <!-- Boutons d'action -->
+          <HBox id="_IDGenHBox" justifyContent="End" class="sapUiTinyMarginBottom sapUiTinyMarginTop" wrap="Wrap">
+            <Button id="_IDGenButton1" text="Traiter" type="Emphasized" icon="sap-icon://process" class="sapUiTinyMarginEnd"/>
+            <Button id="_IDGenButton2" text="En Cours de Traitement" type="Accept" icon="sap-icon://refresh" class="sapUiTinyMarginEnd"/>
+        
+            <Button id="_IDGenButton5" text="Corbeille" type="Reject" icon="sap-icon://delete" class="sapUiTinyMarginEnd"/>
+          </HBox>
+
+          <!-- SmartTable -->
+          <smartTable:SmartTable
+            id="smartTableLivraison"
+            smartFilterId="smartFilterLivraison"
+            entitySet="ZCDS_livraison"
+            tableType="ResponsiveTable"
+            useTablePersonalisation="true"
+            useVariantManagement="false"
+            showRowCount="true"
+            enableAutoBinding="true"
+            persistencyKey="PT_ARTICLE">
+          </smartTable:SmartTable>
+
+        </VBox>
+      </HBox>
+    </content>
+  </Page>
+</mvc:View>

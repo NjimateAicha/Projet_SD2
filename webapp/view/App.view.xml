@@ -1,0 +1,12 @@
+<mvc:View
+  controllerName="projectsd2.controller.App"
+  displayBlock="true"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:tnt="sap.tnt"
+  xmlns:app="sap.m">
+
+  <!-- Le conteneur App pour le routing -->
+  <App id="app" />
+
+</mvc:View>
