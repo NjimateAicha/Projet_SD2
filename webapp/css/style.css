@@ -80,3 +80,673 @@
   color: #333;
 }
 
+
+
+/* Enter your custom styles here */
+.customSideNav {
+  background-color: #F5F5F5;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.customNavItem.sapTntNavLIItemSelected {
+  border-left: 4px solid #4CAF50;
+}
+.customNavItem:hover {
+  background-color: rgba(46, 139, 87, 0.1);
+}
+.customHeaderButton {
+  color: white;
+}
+.customHeaderButton:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+
+.fullHeight {
+  height: 50vh;
+}
+
+.flexGrow {
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+
+.mainContent {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+/* Sidebar */
+.customSidebar {
+background-color: #ffffff;
+box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+padding-top: 1rem;
+}
+
+
+/* Menu */
+.navList .sapTntNavLI {
+border-radius: 8px;
+margin: 0.3rem 0;
+transition: background-color 0.2s;
+}
+
+.navList .sapTntNavLI:hover {
+background-color: #e3f2fd;
+}
+
+.navList .sapTntNavLI.sapTntNavLISelected {
+background-color: #1976d2 !important;
+color: white !important;
+}
+
+.navList .sapTntNavLI.sapTntNavLISelected .sapUiIcon {
+color: white !important;
+}
+
+/* Barre du haut */
+.mainHeader {
+background-color: #ffffff;
+border-bottom: 1px solid #ddd;
+padding: 0 1rem;
+}
+
+.pageTitle {
+font-size: 1.4rem;
+font-weight: bold;
+color: #333;
+}
+
+/* Dashboard Container */
+.dashboardPage {
+background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+min-height: 100vh;
+}
+
+.dashboardContainer {
+padding: 1.5rem;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+/* En-tête */
+.headerSection {
+background: white;
+padding: 2rem;
+border-radius: 12px;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+margin-bottom: 2rem;
+border-left: 4px solid #0070f3;
+}
+
+.mainTitle {
+color: #2c3e50;
+font-weight: 700;
+font-size: 2.5rem;
+margin-bottom: 0.5rem;
+}
+
+.subTitle {
+color: #7f8c8d;
+font-size: 1.1rem;
+font-weight: 400;
+}
+
+.dateSection {
+background: #f8fafc;
+padding: 1rem 1.5rem;
+border-radius: 8px;
+border: 1px solid #e2e8f0;
+}
+
+.dateIcon {
+color: #0070f3;
+margin-right: 0.5rem;
+}
+
+.dateText {
+color: #475569;
+font-weight: 500;
+}/* Dashboard Container avec couleurs Sofalim */
+.dashboardPage {
+background: linear-gradient(135deg, #f0f8f0 0%, #fff5e6 100%);
+min-height: 100vh;
+}
+
+.dashboardContainer {
+padding: 1.5rem;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+/* En-tête avec couleurs du logo */
+.headerSection {
+background: white;
+padding: 2rem;
+border-radius: 12px;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+margin-bottom: 2rem;
+border-left: 4px solid #52b788; /* Vert Sofalim */
+}
+
+.mainTitle {
+color: #2d5016; /* Vert foncé */
+font-weight: 700;
+font-size: 2.5rem;
+margin-bottom: 0.5rem;
+}
+
+.subTitle {
+color: #6a994e; /* Vert moyen */
+font-size: 1.1rem;
+font-weight: 400;
+}
+
+.dateSection {
+background: #f8fff8;
+padding: 1rem 1.5rem;
+border-radius: 8px;
+border: 1px solid #a7c957;
+}
+
+.dateIcon {
+color: #f4a261; /* Orange Sofalim */
+margin-right: 0.5rem;
+}
+
+.dateText {
+color: #386641;
+font-weight: 500;
+}
+
+/* Panel des métriques compactes */
+.metricsPanel {
+background: white;
+border-radius: 16px;
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+margin-bottom: 2rem;
+border: none;
+overflow: hidden;
+}
+
+.metricsPanel .sapMPanelHdr {
+background: linear-gradient(135deg, #52b788 0%, #f4a261 100%);
+color: white;
+padding: 1.5rem 2rem;
+font-weight: 600;
+font-size: 1.2rem;
+}
+
+.metricsPanel .sapMPanelContent {
+padding: 1.5rem;
+}
+
+/* Rangée de métriques compactes */
+.metricsRow {
+gap: 1rem;
+justify-content: center;
+}
+
+/* Cartes compactes */
+.compactTile {
+flex: 0 1 auto;
+min-width: 180px;
+max-width: 200px;
+border-radius: 10px;
+transition: all 0.3s ease;
+cursor: pointer;
+border: 1px solid #e2e8f0;
+box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+margin: 0.5rem;
+height: 120px; /* Hauteur réduite */
+}
+
+.compactTile:hover {
+transform: translateY(-3px);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Couleurs spécifiques inspirées du logo Sofalim */
+.commandesTile {
+background: linear-gradient(135deg, #a7c957 0%, #6a994e 100%);
+border-left: 3px solid #386641;
+}
+
+.clientsTile {
+background: linear-gradient(135deg, #52b788 0%, #40916c 100%);
+border-left: 3px solid #2d5016;
+}
+
+.articlesTile {
+background: linear-gradient(135deg, #f4a261 0%, #e76f51 100%);
+border-left: 3px solid #e9c46a;
+}
+
+.transporteursTile {
+background: linear-gradient(135deg, #bc4749 0%, #a7c957 30%, #52b788 100%);
+border-left: 3px solid #6a994e;
+}
+
+.vehiculesTile {
+background: linear-gradient(135deg, #8ecae6 0%, #219ebc 50%, #52b788 100%);
+border-left: 3px solid #023047;
+}
+
+.chauffeursTile {
+background: linear-gradient(135deg, #f4a261 0%, #e76f51 50%, #bc4749 100%);
+border-left: 3px solid #f4a261;
+}
+
+/* Contenu des cartes compactes */
+.compactTile .sapMTileContent {
+padding: 1rem;
+}
+
+.compactTile .sapMGT .sapMGTHdr {
+font-weight: 600;
+color: white;
+margin-bottom: 0.3rem;
+font-size: 0.9rem;
+}
+
+.compactTile .sapMGT .sapMGTSubHdr {
+color: rgba(255, 255, 255, 0.9);
+font-size: 0.8rem;
+}
+
+.compactTile .sapMNumC {
+margin-top: 0.5rem;
+}
+
+.compactTile .sapMNumC .sapMNCValue {
+font-size: 2rem;
+font-weight: 700;
+color: white;
+}
+
+.compactTile .sapUiIcon {
+font-size: 1.5rem;
+color: rgba(255, 255, 255, 0.8);
+}
+
+/* Panel de graphiques */
+.chartPanel {
+background: white;
+border-radius: 16px;
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+margin-bottom: 2rem;
+border: none;
+overflow: hidden;
+}
+
+.chartPanel .sapMPanelHdr {
+background: linear-gradient(135deg, #386641 0%, #52b788 50%, #f4a261 100%);
+color: white;
+padding: 1.5rem 2rem;
+font-weight: 600;
+font-size: 1.2rem;
+}
+
+.chartPanel .sapMPanelContent {
+padding: 2rem;
+}
+
+/* Section Graphiques */
+.chartContainer {
+padding: 1rem 0;
+}
+
+.singleChartContainer {
+margin-bottom: 2rem;
+}
+
+.chartHeader {
+margin-bottom: 1.5rem;
+padding-bottom: 1rem;
+border-bottom: 2px solid #a7c957;
+}
+
+.chartTitle {
+color: #2d5016;
+font-weight: 600;
+}
+
+.expandButton {
+background: #f8fff8;
+border: 1px solid #a7c957;
+border-radius: 6px;
+transition: all 0.2s ease;
+}
+
+.expandButton:hover {
+background: #52b788;
+color: white;
+transform: scale(1.05);
+}
+
+/* Graphique VizFrame avec thème Sofalim */
+.elegantChart {
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+background: white;
+}
+
+/* Configuration des couleurs du graphique VizFrame */
+#allMetricsChart .v-m-plot .v-datapoint {
+fill: #52b788 !important;
+}
+
+#allMetricsChart .v-m-plot .v-datapoint:nth-child(2n) {
+fill: #f4a261 !important;
+}
+
+#allMetricsChart .v-m-plot .v-datapoint:nth-child(3n) {
+fill: #6a994e !important;
+}
+
+#allMetricsChart .v-m-plot .v-datapoint:nth-child(4n) {
+fill: #e76f51 !important;
+}
+
+#allMetricsChart .v-m-plot .v-datapoint:nth-child(5n) {
+fill: #386641 !important;
+}
+
+#allMetricsChart .v-m-plot .v-datapoint:nth-child(6n) {
+fill: #bc4749 !important;
+}
+
+/* Responsive Design pour cartes compactes */
+@media (max-width: 1024px) {
+.metricsRow {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.compactTile {
+    min-width: 160px;
+    max-width: 180px;
+}
+}
+
+@media (max-width: 768px) {
+.dashboardContainer {
+    padding: 1rem;
+}
+
+.headerSection {
+    padding: 1.5rem;
+}
+
+.mainTitle {
+    font-size: 2rem;
+}
+
+.metricsPanel .sapMPanelContent {
+    padding: 1rem;
+}
+
+.compactTile {
+    min-width: 140px;
+    max-width: 160px;
+    height: 110px;
+}
+
+.compactTile .sapMNumC .sapMNCValue {
+    font-size: 1.8rem;
+}
+}
+
+@media (max-width: 480px) {
+.metricsRow {
+    flex-direction: column;
+    align-items: center;
+}
+
+.compactTile {
+    min-width: 280px;
+    max-width: 300px;
+    height: 100px;
+}
+}
+
+/* Animations de chargement avec couleurs Sofalim */
+.sapMBusyIndicator {
+background: rgba(255, 255, 255, 0.95);
+border-radius: 8px;
+}
+
+/* Améliorations pour l'accessibilité */
+.compactTile:focus {
+outline: 2px solid #52b788;
+outline-offset: 2px;
+}
+
+/* Messages toast avec couleurs du logo */
+.sapMMessageToast {
+background: linear-gradient(135deg, #52b788 0%, #f4a261 100%);
+color: white;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}dateIcon {
+color: #0070f3;
+margin-right: 0.5rem;
+}
+
+.dateText {
+color: #475569;
+font-weight: 500;
+}
+
+/* Panels */
+.kpiPanel,
+.transportPanel,
+.chartPanel {
+background: white;
+border-radius: 16px;
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+margin-bottom: 2rem;
+border: none;
+overflow: hidden;
+}
+
+.kpiPanel .sapMPanelHdr,
+.transportPanel .sapMPanelHdr,
+.chartPanel .sapMPanelHdr {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+padding: 1.5rem 2rem;
+font-weight: 600;
+font-size: 1.2rem;
+}
+
+.kpiPanel .sapMPanelContent,
+.transportPanel .sapMPanelContent,
+.chartPanel .sapMPanelContent {
+padding: 2rem;
+}
+
+/* KPI Tiles */
+.kpiRow,
+.transportRow {
+gap: 1.5rem;
+}
+
+.kpiTile {
+flex: 1;
+min-width: 280px;
+max-width: 320px;
+border-radius: 12px;
+transition: all 0.3s ease;
+cursor: pointer;
+border: 1px solid #e2e8f0;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+margin: 0.5rem;
+}
+
+.kpiTile:hover {
+transform: translateY(-4px);
+box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* Couleurs spécifiques pour chaque type de tuile */
+.commandesTile {
+background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+border-left: 4px solid #ff6b95;
+}
+
+.clientsTile {
+background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+border-left: 4px solid #48cae4;
+}
+
+.articlesTile {
+background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+border-left: 4px solid #ff8a65;
+}
+
+.transporteursTile {
+background: linear-gradient(135deg, #e0c3fc 0%, #9bb5ff 100%);
+border-left: 4px solid #8b5cf6;
+}
+
+.vehiculesTile {
+background: linear-gradient(135deg, #a8f0c6 0%, #7be3a8 100%);
+border-left: 4px solid #10b981;
+}
+
+.chauffeursTile {
+background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+border-left: 4px solid #f59e0b;
+}
+
+/* Contenu des tuiles */
+.kpiTile .sapMTileContent {
+padding: 1.5rem;
+}
+
+.kpiTile .sapMGT .sapMGTHdr {
+font-weight: 600;
+color: #2d3748;
+margin-bottom: 0.5rem;
+}
+
+.kpiTile .sapMGT .sapMGTSubHdr {
+color: #718096;
+font-size: 0.9rem;
+}
+
+.kpiTile .sapMNumC {
+margin-top: 1rem;
+}
+
+.kpiTile .sapMNumC .sapMNCValue {
+font-size: 2.5rem;
+font-weight: 700;
+color: #2d3748;
+}
+
+.kpiTile .sapUiIcon {
+font-size: 2rem;
+opacity: 0.8;
+}
+
+/* Section Graphiques */
+.chartContainer {
+padding: 1rem 0;
+}
+
+.singleChartContainer {
+margin-bottom: 2rem;
+}
+
+.chartHeader {
+margin-bottom: 1.5rem;
+padding-bottom: 1rem;
+border-bottom: 2px solid #e2e8f0;
+}
+
+.chartTitle {
+color: #2d3748;
+font-weight: 600;
+}
+
+.expandButton {
+background: #f7fafc;
+border: 1px solid #e2e8f0;
+border-radius: 6px;
+transition: all 0.2s ease;
+}
+
+.expandButton:hover {
+background: #edf2f7;
+transform: scale(1.05);
+}
+
+/* Graphique VizFrame */
+.elegantChart {
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+background: white;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+.kpiRow,
+.transportRow {
+    flex-direction: column;
+    align-items: center;
+}
+
+.kpiTile {
+    max-width: 100%;
+    width: 100%;
+}
+}
+
+@media (max-width: 768px) {
+.dashboardContainer {
+    padding: 1rem;
+}
+
+.headerSection {
+    padding: 1.5rem;
+}
+
+.mainTitle {
+    font-size: 2rem;
+}
+
+.kpiPanel .sapMPanelContent,
+.transportPanel .sapMPanelContent,
+.chartPanel .sapMPanelContent {
+    padding: 1rem;
+}
+}
+
+/* Animations de chargement */
+.sapMBusyIndicator {
+background: rgba(255, 255, 255, 0.9);
+border-radius: 8px;
+}
+
+/* Améliorations pour l'accessibilité */
+.kpiTile:focus {
+outline: 2px solid #0070f3;
+outline-offset: 2px;
+}
+
+/* Personnalisation des messages toast */
+.sapMMessageToast {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

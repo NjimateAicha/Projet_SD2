@@ -1,0 +1,146 @@
+<mvc:View
+  controllerName="projectsd2.controller.Flux"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout.form"
+  xmlns:smartTable="sap.ui.comp.smarttable">
+
+  <Page id="_IDGenPage" title="Traitement De la Livraison">
+    <content>
+
+      <!-- SECTION PESÉE ET PRÉPARATION -->
+ <Panel id="_IDGenPanel" headerText="Détails de la Livraison" class="sapUiMediumMarginTop sapUiResponsiveMargin">
+  <!-- BOUTONS EN HAUT -->
+  <HBox id="_IDGenHBox3" justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+    <Button id="_IDGenButton" text="Arrivée du camion" type="Emphasized" press="onArriveeCamion" />
+    <Button id="_IDGenButton1" text="Récupérer le poids Tare" press="onGetPoidsTare" />
+    <Button id="_IDGenButton2" text="Récupérer le poids Brute" press="onGetPoidsBrut" />
+    <Button id="_IDGenButton4" text="Départ du camion" type="Reject" press="onDepartCamion" />
+  </HBox>
+
+  <!-- FORMULAIRE EN 3 COLONNES -->
+  <layout:Grid id="_IDGenGrid" defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop" xmlns:layout="sap.ui.layout">
+    <!-- Colonne 1 -->
+    <VBox id="_IDGenVBox2">
+      <Label id="_IDGenLabel" text="Statut d'exécution :" />
+      <Select id="_IDGenSelect" selectedKey="{FluxModel>/Status}">
+        <items>
+          <core:Item id="_IDGenItem" key="Aucun" text="Arrivé" />
+          <core:Item id="_IDGenItem1" key="EnCours" text="Chargement " />
+          <core:Item id="_IDGenItem2" key="Terminé" text="Terminé" />
+        </items>
+      </Select>
+
+      <Label id="_IDGenLabel1" text="Date de départ :" class="sapUiTinyMarginTop" />
+      <DatePicker id="_IDGenDatePicker" value="{FluxModel>/Datedepart}" editable="false" />
+
+
+      <Label id="_IDGenLabel2" text="Ecart de poids :" class="sapUiTinyMarginTop" />
+      <Input id="_IDGenInput" value="{FluxModel>/EcartPoids}" type="Number" />
+
+
+    </VBox>
+
+    <!-- Colonne 2 -->
+    <VBox id="_IDGenVBox6">
+      <Label id="_IDGenLabel3" text="Poids déclaré :" />
+     
+      <Input id="_IDGenInput1" value="{FluxModel>/PoidsDeclare}" type="Number" editable="false" />
+
+      <Label id="_IDGenLabel4" text="Date d'entrée :" class="sapUiTinyMarginTop" />
+      <DatePicker id="_IDGenDatePicker1" value="{FluxModel>/Dateentree}" editable="false" />
+
+      <Label id="_IDGenLabel5" text="Poids net :" class="sapUiTinyMarginTop" />
+      <Input id="_IDGenInput2" value="{FluxModel>/Poidsnet}" type="Number"   />
+    </VBox>
+
+    <!-- Colonne 3 -->
+    <VBox id="_IDGenVBox7">
+      <Label id="_IDGenLabel6" text="Poids tare :" />
+      <Input id="_IDGenInput3" value="{FluxModel>/Tare}" type="Number"  editable="false" />
+
+      <Label id="_IDGenLabel7" text="Poids brut :" class="sapUiTinyMarginTop" />
+      <Input id="_IDGenInput4" value="{FluxModel>/Poidsbrut}" type="Number" editable="false"  />
+
+      <Label id="_IDGenLabel8" text="Date d'arrivée :" class="sapUiTinyMarginTop" />
+      <DatePicker id="_IDGenDatePicker2" value="{FluxModel>/Datearrivee}" editable="false" />
+      
+
+
+
+    </VBox>
+       <VBox id="_IDGenVBo7" class="center">
+     
+
+      <Label id="_IDGenLabel72" text="Commentaire :" class="sapUiTinyMarginTop" />
+      <Input id="_IDGenInput42"  value="{FluxModel>/Commentaire}"
+ type="Text"   />
+
+      
+      
+
+
+
+    </VBox>
+  </layout:Grid>
+
+  <!-- BOUTONS EN BAS -->
+  <HBox id="_IDGenHBox6" justifyContent="End" class="sapUiSmallMargin" >
+    <Button id="_IDGenButton5" text="Sauvegarder Informations" type="Accept" icon="sap-icon://save" press="onSaveInfo" class="sapUiTinyMarginBegin" />
+    <Button id="_IDGenButton6" text="Annuler" type="Reject" icon="sap-icon://decline" press="onCancelInfo" class="sapUiTinyMarginBegin" />
+  </HBox>
+</Panel>
+
+
+      <!-- SECTION BONS PDF -->
+     
+
+      <!-- BOUTONS GÉNÉRAUX -->
+      <!-- <HBox id="_IDGenHBox5" class="sapUiSmallMargin" justifyContent="End">
+        <Button id="_IDGenButton10" icon="sap-icon://accept" text="Traiter" type="Emphasized" press="onTraiterPress" />
+        <Button id="_IDGenButton11" icon="sap-icon://sys-start" text="En Cours de Traitement" type="Accept" press="onEnCoursPress" class="sapUiTinyMarginBegin" />
+        <Button id="_IDGenButton12" icon="sap-icon://delete" text="Corbeille" type="Negative" press="onCorbeillePress" class="sapUiTinyMarginBegin" />
+      </HBox> -->
+      <Panel id="_IDGenPanel1" headerText="Les Bons" class="sapUiMediumMarginTop sapUiResponsiveMargin">
+        <HBox id="_IDGenHBox4" justifyContent="SpaceAround" class="sapUiSmallMarginTop">
+          <VBox id="_IDGenVBox3" alignItems="Center">
+            <Text id="_IDGenText" text="Bon de Préparation" class="sapUiSmallMarginBottom" />
+            <Button id="_IDGenButton7" icon="sap-icon://pdf-attachment" press="onViewBonPesee" />
+          </VBox>
+           <VBox id="_IDGenVBox45" alignItems="Center">
+            <Text id="_IDGenText42" text="Bon de Pesée" class="sapUiSmallMarginBottom" />
+            <Button id="_IDGenButTton9" icon="sap-icon://pdf-attachment" press="onViewBonPesée" />
+          </VBox>
+          <VBox id="_IDGenVBox5" alignItems="Center">
+            <Text id="_IDGenText2" text="Bon de Livraison" class="sapUiSmallMarginBottom" />
+            <Button id="_IDGenButton9" icon="sap-icon://pdf-attachment" press="onViewBonReception" />
+          </VBox>
+        </HBox>
+      </Panel>
+      <!-- TABLE FLUX -->
+      <smartTable:SmartTable
+        id="smartTableFlux"
+        entitySet="ZCDS_flux"
+        tableType="ResponsiveTable"
+        useVariantManagement="false"
+        useTablePersonalisation="true"
+        enableAutoBinding="false"
+        header="Table de Livraison"
+        beforeRebindTable="onBeforeRebindTable"
+        >
+
+       
+        <Table id="tblFlux" mode="SingleSelectLeft" includeItemInSelection="true" items="{ path: '/ZCDS_flux', filters: [{ path: 'Idcommande', operator: 'EQ', value1: '${view>/Idcommande}' }, { path: 'Idchauffeur', operator: 'EQ', value1: '${view>/Idchauffeur}' }] }">
+
+          <columns />
+          <items>
+            <ColumnListItem id="_IDGenColumnListItem2" />
+          </items>
+        </Table>
+      </smartTable:SmartTable>
+      
+
+    </content>
+  </Page>
+</mvc:View>

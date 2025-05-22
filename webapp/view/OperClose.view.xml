@@ -1,0 +1,37 @@
+<mvc:View
+  controllerName="projectsd2.controller.OperClose"
+  displayBlock="true"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:tnt="sap.tnt"
+  xmlns:smartTable="sap.ui.comp.smarttable"
+  xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+
+  <Page id="mainePageee" showHeader="false">
+        <smartFilterBar:SmartFilterBar
+        id="smartFilterBarOpercloce"
+        entitySet="ZCDS_flux">
+        <smartFilterBar:controlConfiguration>
+          <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration334" key="Idflux" visibleInAdvancedArea="true" />
+        </smartFilterBar:controlConfiguration>
+      </smartFilterBar:SmartFilterBar>
+
+    
+      <smartTable:SmartTable
+        id="smartTableOperClose"
+        entitySet="ZCDS_flux"
+        tableType="ResponsiveTable"
+        useVariantManagement="false"
+        useTablePersonalisation="true"
+        enableAutoBinding="true"
+        header="Table de Livraison Terminées"
+        beforeRebindTable="onBeforeRebindOperClose"
+        showRowCount="false"
+        >
+     
+
+       
+      </smartTable:SmartTable>
+  
+  </Page>
+</mvc:View>

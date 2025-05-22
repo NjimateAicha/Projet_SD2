@@ -1,0 +1,85 @@
+<mvc:View
+  controllerName="projectsd2.controller.LanceOper"
+  displayBlock="true"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:tnt="sap.tnt"
+  xmlns:smartTable="sap.ui.comp.smarttable"
+  xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+
+  <Page id="mainPagee" showHeader="false">
+    <!-- Header -->
+    <Bar id="_IDGenBar" design="Header">
+      <contentMiddle>
+        <Title id="_IDGenTitle" text="Gestion de transport entrant" level="H3"/>
+      </contentMiddle>
+    </Bar>
+       <!-- SmartFilterBar -->
+      <smartFilterBar:SmartFilterBar
+        id="smartFilterBar3"
+        entitySet="ZCDS_commande">
+        <smartFilterBar:controlConfiguration>
+          <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration3"
+            key="Idcommande"
+            visibleInAdvancedArea="true" />
+        </smartFilterBar:controlConfiguration>
+      </smartFilterBar:SmartFilterBar>
+
+    <!-- LIGNE 1 -->
+    <!-- <HBox id="_IDGenHBox1" class="sapUiSmallMargin" alignItems="Center" justifyContent="Start" wrap="Wrap">
+      <Input id="inIdCommande" placeholder="ID Commande" width="15rem"
+        showValueHelp="true" valueHelpRequest="onOpenIdCommandeVHD" submit="onFieldSubmit"/>
+      <Input id="inNomClient" placeholder="Client" width="15rem"
+        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenClientVHD" submit="onFieldSubmit"/>
+      <Input id="inDateCommande" placeholder="Date" width="15rem"
+        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenDateVHD" submit="onFieldSubmit"/>
+      <Input id="inNomTransporteur" placeholder="Nom Transporteur" width="15rem"
+        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenTransporteurVHD" submit="onFieldSubmit"/>
+    </HBox> -->
+
+    <!-- LIGNE 2 -->
+    <HBox id="_IDGenHBox2" class="sapUiSmallMarginTop sapUiSmallMargin" alignItems="Center" justifyContent="Start" wrap="Wrap">
+    <Input id="inIdChauffeur" visible="false" />
+          <Input id="inNomTransporteur" placeholder="Nom Transporteur" width="15rem"
+        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenTransporteurVHD" submit="onFieldSubmit"/>
+
+      <Input id="inNomChauffeur" placeholder="Nom Chauffeur" width="15rem"
+       class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenChauffeurVHD" submit="onFieldSubmit"/>
+      
+      <Input id="inCIN" placeholder="CIN" width="15rem" class="sapUiSmallMarginBegin"
+        showValueHelp="true" valueHelpRequest="onOpenCinVHD" submit="onFieldSubmit"/>
+      <Input id="inMatricule" placeholder="Matricule" width="15rem" class="sapUiSmallMarginBegin"
+     showValueHelp="true" valueHelpRequest="onOpenMatriculeVHD" submit="onFieldSubmit"/>
+      <Button id="btnGo" text="Go" type="Emphasized" class="sapUiSmallMarginBegin" press="onPressGO"/>
+    </HBox>
+
+    <!-- BOUTON SUIVANT -->
+    <HBox id="_IDGenHBoxx" justifyContent="End" class="sapUiTinyMarginBottom sapUiTinyMarginTop" wrap="Wrap">
+      <Button id="_IDGenButton3" text="Lancer l'Operation" press="onPressLancer" type="Emphasized" class="sapUiSmallMarginBegin"/>
+    </HBox>
+
+    <!-- TABLE -->
+    <smartTable:SmartTable
+      id="smartTableLivraison"
+      smartFilterId="smartFilterLivraison"
+      entitySet="ZCDS_commande"
+      tableType="ResponsiveTable"
+      useTablePersonalisation="true"
+      useVariantManagement="false"
+      showRowCount="true"
+      enableAutoBinding="true"
+      persistencyKey="PT_ARTICLE"
+      beforeRebindTable="onBeforeRebindLivraison">
+
+      <Table id="tblLivraison"
+             mode="SingleSelectLeft"
+             includeItemInSelection="true"
+             items="{ path: '/ZCDS_commande' }">
+        <columns/>
+        <items>
+          <ColumnListItem id="_IDGenColumnListItem"/>
+        </items>
+      </Table>
+    </smartTable:SmartTable>
+  </Page>
+</mvc:View>

@@ -113,7 +113,31 @@
           "name": "Dashboard",
           "pattern": "Dashboard",
           "target": ["TargetDashboard"]
+        },
+        {
+          "name": "LanceOper",
+          "pattern": "LanceOper",
+          "target": ["TargetLanceOper"]
+        },
+        {
+          "name": "Flux",
+         
+          "pattern": "Flux/{Idcommande}/{Idchauffeur}",
+          "target": ["TargetFlux"]
         }
+        ,
+        {
+          "pattern": "Operations",
+          "name": "Operations",
+          "target": ["TargetOperations"]
+        }
+        ,
+        {
+          "pattern":"OperClose",
+          "name":"OperClose",
+          "target":["TargetOperClose"]
+        }
+        
       ],
       "targets": {
         "TargetDashboard": {
@@ -122,7 +146,39 @@
           "type": "XML",
           "controlId": "app",
           "controlAggregation": "pages"
+        },
+        "TargetLanceOper": {
+          "viewName": "LanceOper",
+          "viewId": "LanceOper",
+          "type": "XML",
+          "controlId": "app",
+          "controlAggregation": "pages"
+        },
+        "TargetFlux": {
+          "viewName": "Flux",
+          "viewId": "Flux",
+          "type": "XML",
+          "controlId": "app",
+          "controlAggregation": "pages"
         }
+        ,
+        "TargetOperations": {
+          "viewName": "Operations",
+          "viewId": "Operations",
+          "type": "XML",
+          "controlId": "app",
+          "controlAggregation": "pages"
+        },
+        "TargetOperClose":{
+          "viewName": "OperClose",
+          "viewId": "OperClose",
+          "type": "XML",
+          "controlId": "app",
+          "controlAggregation": "pages"
+
+        }
+      
+
       }
     },
     "rootView": {

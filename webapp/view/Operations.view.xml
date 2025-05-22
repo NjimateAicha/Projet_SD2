@@ -1,0 +1,60 @@
+<mvc:View
+  controllerName="projectsd2.controller.Operations"
+  displayBlock="true"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:tnt="sap.tnt"
+  xmlns:smartTable="sap.ui.comp.smarttable"
+  xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+
+  <Page id="mainePagee" showHeader="false">
+
+  <smartFilterBar:SmartFilterBar
+        id="smartFilterBarChauffeur"
+        entitySet="ZCDS_flux">
+        <smartFilterBar:controlConfiguration>
+          <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration4" key="Idflux" visibleInAdvancedArea="true" />
+        </smartFilterBar:controlConfiguration>
+      </smartFilterBar:SmartFilterBar>
+
+  
+      <!-- BOUTONS GÉNÉRAUX -->
+      <HBox id="_IDGenHBox55" class="sapUiSmallMargin" justifyContent="End">
+       <Button id="btnSuiviTraitement" 
+         icon="sap-icon://monitor-payments" 
+         text="Suivre le Traitement" 
+         type="Accept" 
+         press="onEnCoursPress" 
+         class="sapUiTinyMarginBegin" />
+     
+        <Button id="_IDGenButton11122" icon="sap-icon://delete" text="Corbeille" type="Negative" press="onCorbeillePressMulti" class="sapUiTinyMarginBegin" />
+      </HBox>
+
+      <!-- TABLE FLUX -->
+      <smartTable:SmartTable
+        id="smartTableOperations"
+        entitySet="ZCDS_flux"
+        tableType="ResponsiveTable"
+        useVariantManagement="false"
+        useTablePersonalisation="true"
+        enableAutoBinding="true"
+        header="Table de Livraison"
+        beforeRebindTable="onBeforeRebindFlux"
+        showRowCount="false"
+        >
+           
+           <Table id="tblOperations" mode="SingleSelectLeft" includeItemInSelection="true" itemPress="onLinePress">
+
+
+          <columns />
+          <items>
+            <ColumnListItem id="_IDGenColumnListItem22" />
+          </items>
+        </Table>
+        
+
+       
+      </smartTable:SmartTable>
+  
+  </Page>
+</mvc:View>

@@ -6,7 +6,63 @@
   xmlns:tnt="sap.tnt"
   xmlns:app="sap.m">
 
-  <!-- Le conteneur App pour le routing -->
-  <App id="app" />
+  <Page id="mainPage" showHeader="false" class="appContainer">
+    <content>
+      <HBox id="_IDGenHBoxxx" height="100%" class="fullHeight" width="100%">
+    
+        <!-- SIDEBAR -->
+        <VBox id="_IDGenVBox" width="250px" class="customSidebar" height="100%" alignItems="Center">
+          <Image id="_IDGenImage1" src="/images/logo.png"
+                 width="120px"
+                 class="logoImage" />
 
+          <tnt:NavigationList id="_IDGenNavigationListt" itemSelect="onSideNavSelect" class="navList">
+            <!-- <tnt:NavigationListItem id="_IDGenNavigationListItemm" text="Dashboard" key="Dashboard" icon="sap-icon://bar-chart" />
+            <tnt:NavigationListItem id="_IDGenNavigationListItemm2" text="Opérations" key="Operations" icon="sap-icon://bar-chart" />
+            
+            <tnt:NavigationListItem id="_IDGenNavigationListItemm22" text="Opérations Terminée" key="OperClose" icon="sap-icon://bar-chart" /> -->
+           <tnt:NavigationListItem id="navItemDashboard" 
+                          text="Dashboard" 
+                          key="Dashboard" 
+                          icon="sap-icon://business-objects-experience" />
+    
+    <!-- Lancer Opération avec icône de démarrage/lancement -->
+    <tnt:NavigationListItem id="navItemLanceOper"
+                          text="Lancer Opération" 
+                          key="LanceOper" 
+                          icon="sap-icon://play" />
+    
+    <!-- Opérations en cours avec icône d'items en activité -->
+    <tnt:NavigationListItem id="navItemOperations" 
+                          text="Opérations En Cours" 
+                          key="Operations" 
+                          icon="sap-icon://workflow-tasks" />
+    
+    <!-- Opérations terminées avec icône de tâches complétées -->
+    <tnt:NavigationListItem id="navItemOperClose" 
+                          text="Opérations Terminées" 
+                          key="OperClose" 
+                          icon="sap-icon://checklist-item" />
+</tnt:NavigationList>
+        </VBox>
+
+        <!-- CONTENU PRINCIPAL -->
+        <VBox id="_IDGenVBox1" width="100%" class="mainContent">
+          <Bar id="mainHeaderBar" design="Header" class="mainHeader">
+          <contentLeft>
+            <Button id="_IDGenButton122" icon="sap-icon://menu2" press="onToggleSidebar" type="Transparent" />
+          </contentLeft>
+            <contentMiddle>
+              <Title id="_IDGenTitle6" text="Pont Bascule  " level="H3" class="pageTitle"/>
+            </contentMiddle>
+          </Bar>
+          
+
+
+          <App id="app"/>
+        </VBox>
+
+      </HBox>
+    </content>
+  </Page>
 </mvc:View>

@@ -3,69 +3,59 @@
   displayBlock="true"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
-  xmlns:tnt="sap.tnt"
-  xmlns:smartTable="sap.ui.comp.smarttable"
-  xmlns:smartFilterBar="sap.ui.comp.smartfilterbar">
+  xmlns:viz="sap.viz.ui5.controls"
+  xmlns:viz.data="sap.viz.ui5.data"
+  xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
 
-  <Page id="mainPage" showHeader="false">
-    <content>
-      <HBox id="_IDGenHBox1" height="100%" width="100%">
+  <Page id="mainPageeee" showHeader="false" class="sapUiResponsivePadding">
+    <VBox id="_IDGenVBox4" class="sapUiSmallMargin">
 
-        <!-- SIDEBAR -->
-        <VBox id="_IDGenVBox" width="250px" class="customSidebar" height="100%" alignItems="Center">
-          <Image id="_IDGenImage" src="/images/logo.png" width="120px" />
-          <tnt:NavigationList id="_IDGenNavigationList" itemSelect="onSideNavSelect">
-            <tnt:NavigationListItem id="_IDGenNavigationListItem" text="Dashboard" key="Dashboard" icon="sap-icon://bar-chart" />
-          </tnt:NavigationList>
-        </VBox>
+      <!-- Tuiles KPI -->
+      <HBox id="_IDGenHBox" justifyContent="SpaceAround" class="sapUiSmallMarginBottom">
+        <GenericTile id="_IDGenGenericTile" header="Total Flux" subheader="Enregistrés" class="sapUiSmallMargin">
+          <TileContent id="_IDGenTileContent">
+            <NumericContent id="_IDGenNumericContent" value="{dashboard>/totalFlux}" icon="sap-icon://shipping-status" />
+          </TileContent>
+        </GenericTile>
 
-        <!-- MAIN CONTENT -->
-        <VBox width="100%" class="mainContent" id="mainContentVBox">
-          <Bar id="_IDGenBar" design="Header">
-            <contentLeft>
-              <Button id="_IDGenButton" icon="sap-icon://menu2" press="onToggleSidebar" type="Transparent" />
-            </contentLeft>
-            <contentMiddle>
-              <Title id="_IDGenTitle" text="Gestion de transport entrant" level="H3" />
-            </contentMiddle>
-          </Bar>
+        <GenericTile id="_IDGenGenericTile1" header="En Chargement" subheader="Flux en cours" class="sapUiSmallMargin">
+          <TileContent id="_IDGenTileContent1">
+            <NumericContent id="_IDGenNumericContent1" value="{dashboard>/totalChargement}" icon="sap-icon://action-settings" valueColor="Critical" />
+          </TileContent>
+        </GenericTile>
 
-          <!-- SmartFilterBar -->
-          <smartFilterBar:SmartFilterBar
-            id="smartFilterLivraison"
-            entitySet="ZCDS_livraison"
-            useToolbar="true"
-            showClearOnFB="true"
-            showGoOnFB="true"
-            persistencyKey="smartFilterLivraison">
-            <smartFilterBar:controlConfiguration>
-              <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration1" key="Idlivraison" visibleInAdvancedArea="true" />
-            </smartFilterBar:controlConfiguration>
-          </smartFilterBar:SmartFilterBar>
-
-          <!-- Boutons d'action -->
-          <HBox id="_IDGenHBox" justifyContent="End" class="sapUiTinyMarginBottom sapUiTinyMarginTop" wrap="Wrap">
-            <Button id="_IDGenButton1" text="Traiter" type="Emphasized" icon="sap-icon://process" class="sapUiTinyMarginEnd"/>
-            <Button id="_IDGenButton2" text="En Cours de Traitement" type="Accept" icon="sap-icon://refresh" class="sapUiTinyMarginEnd"/>
-        
-            <Button id="_IDGenButton5" text="Corbeille" type="Reject" icon="sap-icon://delete" class="sapUiTinyMarginEnd"/>
-          </HBox>
-
-          <!-- SmartTable -->
-          <smartTable:SmartTable
-            id="smartTableLivraison"
-            smartFilterId="smartFilterLivraison"
-            entitySet="ZCDS_livraison"
-            tableType="ResponsiveTable"
-            useTablePersonalisation="true"
-            useVariantManagement="false"
-            showRowCount="true"
-            enableAutoBinding="true"
-            persistencyKey="PT_ARTICLE">
-          </smartTable:SmartTable>
-
-        </VBox>
+        <GenericTile id="_IDGenGenericTile2" header="Terminés" subheader="Flux clôturés" class="sapUiSmallMargin">
+          <TileContent id="_IDGenTileContent2">
+            <NumericContent id="_IDGenNumericContent2" value="{dashboard>/totalTermine}" icon="sap-icon://complete" valueColor="Good" />
+          </TileContent>
+        </GenericTile>
       </HBox>
-    </content>
+
+      <!-- Graphique -->
+      <viz:VizFrame
+        id="fluxChart"
+        width="100%"
+        height="400px"
+        uiConfig="{applicationSet:'fiori'}"
+        vizType="column">
+
+        <viz:dataset>
+          <viz.data:FlattenedDataset id="_IDGenFlattenedDataset" data="{dashboard>/chartData}">
+            <viz.data:dimensions>
+              <viz.data:DimensionDefinition id="_IDGenDimensionDefinition" name="Statut" value="{status}" />
+            </viz.data:dimensions>
+            <viz.data:measures>
+              <viz.data:MeasureDefinition id="_IDGenMeasureDefinition" name="Nombre" value="{count}" />
+            </viz.data:measures>
+          </viz.data:FlattenedDataset>
+        </viz:dataset>
+
+        <viz:feeds>
+          <viz.feeds:FeedItem id="_IDGenFeedItem1" uid="valueAxis" type="Measure" values="Nombre" />
+          <viz.feeds:FeedItem id="_IDGenFeedItem2" uid="categoryAxis" type="Dimension" values="Statut" />
+        </viz:feeds>
+
+      </viz:VizFrame>
+    </VBox>
   </Page>
 </mvc:View>
