@@ -25,33 +25,49 @@
         </smartFilterBar:controlConfiguration>
       </smartFilterBar:SmartFilterBar>
 
-    <!-- LIGNE 1 -->
-    <!-- <HBox id="_IDGenHBox1" class="sapUiSmallMargin" alignItems="Center" justifyContent="Start" wrap="Wrap">
-      <Input id="inIdCommande" placeholder="ID Commande" width="15rem"
-        showValueHelp="true" valueHelpRequest="onOpenIdCommandeVHD" submit="onFieldSubmit"/>
-      <Input id="inNomClient" placeholder="Client" width="15rem"
-        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenClientVHD" submit="onFieldSubmit"/>
-      <Input id="inDateCommande" placeholder="Date" width="15rem"
-        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenDateVHD" submit="onFieldSubmit"/>
-      <Input id="inNomTransporteur" placeholder="Nom Transporteur" width="15rem"
-        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenTransporteurVHD" submit="onFieldSubmit"/>
-    </HBox> -->
+
 
     <!-- LIGNE 2 -->
-    <HBox id="_IDGenHBox2" class="sapUiSmallMarginTop sapUiSmallMargin" alignItems="Center" justifyContent="Start" wrap="Wrap">
+    <!-- <HBox id="_IDGenHBox2" class="sapUiSmallMarginTop sapUiSmallMargin" alignItems="Center" justifyContent="Start" wrap="Wrap">
     <Input id="inIdChauffeur" visible="false" />
+
+     <Input id="inNomChauffeur" placeholder="Nom Chauffeur" width="15rem"
+       class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenChauffeurVHD" submit="onFieldSubmit"/>
           <Input id="inNomTransporteur" placeholder="Nom Transporteur" width="15rem"
         class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenTransporteurVHD" submit="onFieldSubmit"/>
 
-      <Input id="inNomChauffeur" placeholder="Nom Chauffeur" width="15rem"
-       class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenChauffeurVHD" submit="onFieldSubmit"/>
+     
       
       <Input id="inCIN" placeholder="CIN" width="15rem" class="sapUiSmallMarginBegin"
         showValueHelp="true" valueHelpRequest="onOpenCinVHD" submit="onFieldSubmit"/>
       <Input id="inMatricule" placeholder="Matricule" width="15rem" class="sapUiSmallMarginBegin"
      showValueHelp="true" valueHelpRequest="onOpenMatriculeVHD" submit="onFieldSubmit"/>
       <Button id="btnGo" text="Go" type="Emphasized" class="sapUiSmallMarginBegin" press="onPressGO"/>
-    </HBox>
+    </HBox> -->
+    <HBox id="_IDGenHBox2" class="sapUiSmallMarginTop sapUiSmallMargin" alignItems="Center" justifyContent="Start" wrap="Wrap">
+    <Input id="inIdChauffeur" visible="false" />
+
+    <Input id="inNomChauffeur" placeholder="Nom Chauffeur" width="15rem"
+        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenChauffeurVHD" 
+        submit="onFieldSubmit" valueHelpIconSrc="sap-icon://person-placeholder"/>
+        
+    <Input id="inNomTransporteur" placeholder="Nom Transporteur" width="15rem"
+        class="sapUiSmallMarginBegin" showValueHelp="true" valueHelpRequest="onOpenTransporteurVHD" 
+        submit="onFieldSubmit" valueHelpIconSrc="sap-icon://shipping-status"/>
+        
+    <Input id="inCIN" placeholder="CIN" width="15rem" class="sapUiSmallMarginBegin"
+        showValueHelp="true" valueHelpRequest="onOpenCinVHD" submit="onFieldSubmit" 
+        valueHelpIconSrc="sap-icon://card"/>
+        
+    <Input id="inMatricule" placeholder="Matricule" width="15rem" class="sapUiSmallMarginBegin"
+        showValueHelp="true" valueHelpRequest="onOpenMatriculeVHD" submit="onFieldSubmit" 
+        valueHelpIconSrc="sap-icon://number-sign"/>
+        
+    <Button id="btnRechercher" text="Rechercher" type="Emphasized" icon="sap-icon://search" 
+        class="sapUiSmallMarginBegin" press="onPressRechercher"/>
+        
+ 
+</HBox>
 
     <!-- BOUTON SUIVANT -->
     <HBox id="_IDGenHBoxx" justifyContent="End" class="sapUiTinyMarginBottom sapUiTinyMarginTop" wrap="Wrap">

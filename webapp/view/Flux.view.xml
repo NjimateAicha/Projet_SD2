@@ -85,23 +85,15 @@
     </VBox>
   </layout:Grid>
 
-  <!-- BOUTONS EN BAS -->
-  <HBox id="_IDGenHBox6" justifyContent="End" class="sapUiSmallMargin" >
+  <HBox id="_IDGenHBox6" justifyContent="End" class="sapUiSmallMargin">
     <Button id="_IDGenButton5" text="Sauvegarder Informations" type="Accept" icon="sap-icon://save" press="onSaveInfo" class="sapUiTinyMarginBegin" />
-    <Button id="_IDGenButton6" text="Annuler" type="Reject" icon="sap-icon://decline" press="onCancelInfo" class="sapUiTinyMarginBegin" />
-  </HBox>
+    <Button id="_IDGenButton6" text="Annuler" type="Reject" icon="sap-icon://cancel" press="onCancelInfo" class="sapUiTinyMarginBegin" />
+    <Button id="_IDGenButton97" text="Etat des Ecarts" type="Emphasized" icon="sap-icon://status-critical" press="onShowGapStatus" class="sapUiTinyMarginBegin" />
+</HBox>
 </Panel>
 
 
-      <!-- SECTION BONS PDF -->
-     
-
-      <!-- BOUTONS GÉNÉRAUX -->
-      <!-- <HBox id="_IDGenHBox5" class="sapUiSmallMargin" justifyContent="End">
-        <Button id="_IDGenButton10" icon="sap-icon://accept" text="Traiter" type="Emphasized" press="onTraiterPress" />
-        <Button id="_IDGenButton11" icon="sap-icon://sys-start" text="En Cours de Traitement" type="Accept" press="onEnCoursPress" class="sapUiTinyMarginBegin" />
-        <Button id="_IDGenButton12" icon="sap-icon://delete" text="Corbeille" type="Negative" press="onCorbeillePress" class="sapUiTinyMarginBegin" />
-      </HBox> -->
+  
       <Panel id="_IDGenPanel1" headerText="Les Bons" class="sapUiMediumMarginTop sapUiResponsiveMargin">
         <HBox id="_IDGenHBox4" justifyContent="SpaceAround" class="sapUiSmallMarginTop">
           <VBox id="_IDGenVBox3" alignItems="Center">

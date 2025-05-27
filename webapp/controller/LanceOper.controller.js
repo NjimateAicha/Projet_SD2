@@ -48,103 +48,8 @@ sap.ui.define([
   }
   
   ,
-  onOpenIdCommandeVHD() {
-    if (!this._oVhdCmd) {
-      this._oVhdCmd = new ValueHelpDialog({
-        supportMultiselect: false,
-        key: "Idcommande",
-        descriptionKey: "Idcommande",
-        title: "Choisir une commande",
-        ok: this._onIdCommandeOk.bind(this),
-        cancel: () => this._oVhdCmd.close()
-      });
-      this._oVhdCmd.getTableAsync().then(oTable => {
-        oTable.setModel(this.getView().getModel());
-        oTable.bindRows("/ZCDS_commande");
-        oTable.removeAllColumns();
-        oTable.addColumn(new sap.ui.table.Column({
-          label: new sap.m.Label({ text: "ID Commande" }),
-          template: new sap.m.Text({ text: "{Idcommande}" }),
-          sortProperty: "Idcommande",
-          filterProperty: "Idcommande"
-        }));
-      });
-    }
-    this._oVhdCmd.open();
-  },
-  _onIdCommandeOk(oEvent) {
-    const tokens = oEvent.getParameter("tokens");
-    if (tokens.length) {
-      this.byId("inIdCommande").setValue(tokens[0].getKey());
-    }
-    this._oVhdCmd.close();
-  },
+
   
-  onOpenClientVHD() {
-    if (!this._oVhdClient) {
-      this._oVhdClient = new ValueHelpDialog({
-        supportMultiselect: false,
-        key: "Nomclient",
-        descriptionKey: "Nomclient",
-        title: "Choisir un client",
-        ok: this._onClientOk.bind(this),
-        cancel: () => this._oVhdClient.close()
-      });
-      this._oVhdClient.getTableAsync().then(oTable => {
-        oTable.setModel(this.getView().getModel());
-        oTable.bindRows("/ZCDS_commande");
-        oTable.removeAllColumns();
-        oTable.addColumn(new sap.ui.table.Column({
-          label: new sap.m.Label({ text: "Client" }),
-          template: new sap.m.Text({ text: "{Nomclient}" }),
-          sortProperty: "Nomclient",
-          filterProperty: "Nomclient"
-        }));
-      });
-    }
-    this._oVhdClient.open();
-  },
-  _onClientOk(oEvent) {
-    const tokens = oEvent.getParameter("tokens");
-    if (tokens.length) {
-      this.byId("inNomClient").setValue(tokens[0].getKey());
-    }
-    this._oVhdClient.close();
-  },
-  onOpenDateVHD() {
-    if (!this._oVhdDate) {
-      this._oVhdDate = new ValueHelpDialog({
-        supportMultiselect: false,
-        key: "Datecommande",
-        descriptionKey: "Datecommande",
-        title: "Choisir une date",
-        ok: this._onDateOk.bind(this),
-        cancel: () => this._oVhdDate.close()
-      });
-      this._oVhdDate.getTableAsync().then(oTable => {
-        oTable.setModel(this.getView().getModel());
-        oTable.bindRows("/ZCDS_commande");
-        oTable.removeAllColumns();
-        oTable.addColumn(new sap.ui.table.Column({
-          label: new sap.m.Label({ text: "Date" }),
-          template: new sap.m.Text({ text: "{Datecommande}" }),
-          sortProperty: "Datecommande",
-          filterProperty: "Datecommande"
-        }));
-      });
-    }
-    this._oVhdDate.open();
-  },
-  _onDateOk(oEvent) {
-    const tokens = oEvent.getParameter("tokens");
-    if (tokens.length) {
-      // Affiche en format local
-      this.byId("inDateCommande").setValue(
-        new Date(tokens[0].getKey()).toLocaleDateString()
-      );
-    }
-    this._oVhdDate.close();
-  },
   onOpenChauffeurVHD: function () {
     if (!this._oVhdChauffeur) {
       this._oVhdChauffeur = new ValueHelpDialog({
@@ -168,7 +73,7 @@ sap.ui.define([
           { label: "Nom Chauffeur", property: "Nomchauffeur" },
           { label: "Téléphone", property: "Telechauffeur" },
           { label: "Transporteur", property: "Nomtransporter" },
-          { label: "Matricule", property: "Matricule" }
+          // { label: "Matricule", property: "Matricule" }
         ];
   
         aColumns.forEach(col => {
@@ -200,7 +105,8 @@ sap.ui.define([
   
             this.byId("inCIN").setValue(oChauffeur.Cin || "");
             this.byId("inNomTransporteur").setValue(oChauffeur.Nomtransporter || "");
-            this.byId("inMatricule").setValue(oChauffeur.Matricule || "");
+            // this.byId("inMatricule").setValue(oChauffeur.Matricule || "");
+           
   
             // 🆕 Ajoute l'id dans un champ caché (inIdChauffeur)
             this.byId("inIdChauffeur").setValue(oChauffeur.Idchauffeur);
@@ -271,6 +177,8 @@ sap.ui.define([
             this.byId("inNomChauffeur").setValue(oChauffeur.Nomchauffeur || "");
             this.byId("inNomTransporteur").setValue(oChauffeur.Nomtransporter || "");
             this.byId("inMatricule").setValue(oChauffeur.Matricule || "");
+
+            this.byId("inIdChauffeur").setValue(oChauffeur.Idchauffeur);
           }
         },
         error: () => {
@@ -306,11 +214,11 @@ sap.ui.define([
         oTable.removeAllColumns();
   
         const aColumns = [
-          { label: "ID Chauffeur", property: "Idchauffeur" },
-          { label: "CIN", property: "Cin" },
-          { label: "Nom Chauffeur", property: "Nomchauffeur" },
-          { label: "Téléphone", property: "Telechauffeur" },
-          { label: "Transporteur", property: "Nomtransporter" },
+          // { label: "ID Chauffeur", property: "Idchauffeur" },
+          // { label: "CIN", property: "Cin" },
+          // { label: "Nom Chauffeur", property: "Nomchauffeur" },
+          // { label: "Téléphone", property: "Telechauffeur" },
+          // { label: "Transporteur", property: "Nomtransporter" },
           { label: "Matricule", property: "Matricule" }
         ];
   
@@ -340,7 +248,10 @@ sap.ui.define([
         filters: [new Filter("Matricule", FilterOperator.EQ, sMat)],
         success: (oData) => {
           if (oData.results.length > 0) {
+            const oChauffeur = oData.results[0];
             this.setChauffeurFields(oData.results[0]);
+
+            this.byId("inIdChauffeur").setValue(oChauffeur.Idchauffeur);
           }
         },
         error: () => {
@@ -403,6 +314,9 @@ sap.ui.define([
         success: (oData) => {
           if (oData.results.length > 0) {
             this.setChauffeurFields(oData.results[0]);
+            const oChauffeur = oData.results[0];
+
+            this.byId("inIdChauffeur").setValue(oChauffeur.Idchauffeur);
           }
         },
         error: () => {
@@ -424,12 +338,17 @@ sap.ui.define([
       sap.m.MessageToast.show("Veuillez sélectionner une commande.");
       return;
     }
+
   
     const oContext = oSelectedItem.getBindingContext();
     const sCommandeId = oContext.getProperty("Idcommande");
   
     // ✅ Récupère l'ID chauffeur depuis ton input (match code)
     const sIdChauffeur = this.byId("inIdChauffeur").getValue();
+    if (!sIdChauffeur) {
+      sap.m.MessageToast.show("Veuillez sélectionner un chauffeur.");
+      return;
+    }
   
     const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
     oRouter.navTo("Flux", {

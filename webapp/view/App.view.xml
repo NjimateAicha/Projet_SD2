@@ -53,7 +53,7 @@
             <Button id="_IDGenButton122" icon="sap-icon://menu2" press="onToggleSidebar" type="Transparent" />
           </contentLeft>
             <contentMiddle>
-              <Title id="_IDGenTitle6" text="Pont Bascule  " level="H3" class="pageTitle"/>
+              <Title id="_IDGenTitle6" text="Système de Gestion Pont Bascule : Module SD" level="H3" class="pageTitle"/>
             </contentMiddle>
           </Bar>
           

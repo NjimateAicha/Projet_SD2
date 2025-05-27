@@ -27,6 +27,15 @@ sap.ui.define([
         });
       
         this.getView().setModel(oFluxModel, "FluxModel");
+         const sLogoUrl = sap.ui.require.toUrl("projectsd2") + "/images/logo.png";
+  fetch(sLogoUrl)
+    .then(r => r.blob())
+    .then(blob => new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onloadend = () => { this._imgLogo = reader.result; resolve(); };
+      reader.readAsDataURL(blob);
+    }))
+    .catch(console.error);
       }
       
 , 
@@ -133,23 +142,6 @@ _onMatched: function (oEvent) {
       ,      
     
  
-      //   const oModel = this.getView().getModel(); // ton modèle OData
-      //   const oSmartTable = this.byId("smartTableFlux"); // l'ID de ta SmartTable
-      
-      //   if (!oSmartTable) return;
-      
-      //   const oBinding = oSmartTable.getTable().getBinding("items");
-      
-      //   if (oFilters && oFilters.Idcommande && oFilters.Idchauffeur) {
-      //     const aFilters = [
-      //       new sap.ui.model.Filter("Idcommande", "EQ", oFilters.Idcommande),
-      //       new sap.ui.model.Filter("Idchauffeur", "EQ", oFilters.Idchauffeur)
-      //     ];
-      //     oBinding.filter(aFilters);
-      //   } else {
-      //     oBinding.filter([]); // Pas de filtre = tout afficher
-      //   }
-      // },
     
       onArriveeCamion: function () {
         const oView = this.getView();
@@ -226,75 +218,7 @@ _onMatched: function (oEvent) {
       
       
       ,
-      // onSaveInfo: function () {
-      //   const oView = this.getView();
-      //   const oModel = oView.getModel();
-      //   const oFluxModel = oView.getModel("FluxModel");
-      //   const oTable = this.byId("tblFlux");
-      //   oModel.setUseBatch(false);
-      
-      //   const oSelectedItem = oTable.getSelectedItem();
-      //   if (!oSelectedItem) {
-      //     sap.m.MessageToast.show("Veuillez sélectionner un flux.");
-      //     return;
-      //   }
-      
-      //   const oContext = oSelectedItem.getBindingContext();
-      //   const oData = oContext.getObject();
-      
-      //   const sIdflux = oData.Idflux;
-      //   const sIdcommande = oData.Idcommande;
-      //   const sIdchauffeur = oData.Idchauffeur;
-      
-      //   const aItems = oTable.getBinding("items").getContexts();
-      //   const aUpdates = [];
-      
-      //   aItems.forEach((ctx) => {
-      //     const row = ctx.getObject();
-      
-      //     if (
-      //       row.Idflux === sIdflux &&
-      //       row.Idcommande === sIdcommande &&
-      //       row.Idchauffeur === sIdchauffeur
-      //     ) {
-      //       const sPath = `/ZCDS_flux(Idflux='${row.Idflux}',Idcommande='${row.Idcommande}',Idchauffeur=${row.Idchauffeur},Idarticle='${row.Idarticle}')`;
-      
-      //       const Poidsbrut = parseFloat(oFluxModel.getProperty("/Poidsbrut")) || 0;
-      //       const tare = parseFloat(oFluxModel.getProperty("/Tare")) || 0;
-            
-      //       const Poidsnet = Poidsbrut && tare ? Poidsbrut - tare : null;
-      
-      //       const oDataToUpdate = {
-      //         Datearrivee: oFluxModel.getProperty("/Datearrivee"),
-      //         Dateentree: oFluxModel.getProperty("/Dateentree"),
-      //         Tare: oFluxModel.getProperty("/Tare"),
-      //         Status: "Chargement",
-      //       };
-      
-      //       if (Poidsnet !== null) {
-      //         oDataToUpdate.Poidsnet = Poidsnet;
-      //       }
-      
-      //       aUpdates.push(
-      //         new Promise((resolve, reject) => {
-      //           oModel.update(sPath, oDataToUpdate, {
-      //             success: resolve,
-      //             error: reject
-      //           });
-      //         })
-      //       );
-      //     }
-      //   });
-      
-      //   Promise.all(aUpdates)
-      //     .then(() => {
-      //       sap.m.MessageToast.show("✔️ Toutes les lignes ont été mises à jour.");
-      //       this.byId("smartTableFlux").rebindTable();
-      //     })
-      //     .catch(() => {
-      //       sap.m.MessageBox.error("❌ Erreur lors de la mise à jour.");
-      //     });
-      // }
+  
       onSaveInfo: function () {
         const oView = this.getView();
         const oModel = oView.getModel();
@@ -335,6 +259,7 @@ _onMatched: function (oEvent) {
            
             const Datedepart = oFluxModel.getProperty("/Datedepart") || null;
             const PoidsbrutVal = oFluxModel.getProperty("/Poidsbrut");
+            const statutFinal = Datedepart ? "Terminé" : "Chargement";
             
 
 
@@ -345,8 +270,11 @@ _onMatched: function (oEvent) {
                 Poidsnet: Poidsnet.toFixed(2),       // ← idem
                 Datedepart: oFluxModel.getProperty("/Datedepart") || null,
                 Status: "Chargement",
+                Status: statutFinal,
                  Commentaire: oFluxModel.getProperty("/Commentaire") || ""
               };
+   
+
               
             
       
@@ -458,6 +386,7 @@ _onMatched: function (oEvent) {
       });
     }
       ,
+     
       onGetPoidsBrut: function () {
         const oModel = this.getView().getModel();
         const oFluxModel = this.getView().getModel("FluxModel");
@@ -472,6 +401,7 @@ _onMatched: function (oEvent) {
         const oContext = oSelectedItem.getBindingContext();
         const oData = oContext.getObject();
         const sIdcommande = oData.Idcommande;
+        const selectedArticle = oData.Idarticle; // ✅ AJOUTÉ ICI
       
         oModel.read("/ZCDS_Basculee2", {
           sorters: [new sap.ui.model.Sorter("Idbascule", true)],
@@ -490,23 +420,32 @@ _onMatched: function (oEvent) {
             if (tare > Poidsbrut) {
               sap.m.MessageBox.warning("⚠️ Le poids tare est supérieur au poids brut.");
             }
-      
-            // ✅ Lire la quantité totale pour cette commande
             oModel.read(`/ZCDS_commande?$filter=Idcommande eq '${sIdcommande}'`, {
+
+           
               success: (oCommandeData) => {
+                
+               
                 let totalQuantite = 0;
-      
-                oCommandeData.results.forEach((item) => {
-                  totalQuantite += parseFloat(item.Quantite) || 0;
-                });
+
+               
+
+          oCommandeData.results.forEach((item) => {
+            if (item.Idcommande === sIdcommande) {
+              totalQuantite += parseFloat(item.Quantite) || 0;
+            }
+          });
+
+
+                
+
       
                 const ecartPoids = Poidsnet - totalQuantite;
       
-                // ✅ Mettre à jour le modèle
+                // ✅ Mise à jour du modèle
                 oFluxModel.setProperty("/Poidsbrut", Poidsbrut);
-                oFluxModel.setProperty("/Datedepart", sDateTime);
                 oFluxModel.setProperty("/Poidsnet", Poidsnet);
-                oFluxModel.setProperty("/PoidsDeclare", totalQuantite);  // ✅ Somme de toute la commande
+                oFluxModel.setProperty("/PoidsDeclare", totalQuantite);
                 oFluxModel.setProperty("/EcartPoids", ecartPoids);
       
                 sap.m.MessageToast.show("✔️ Données mises à jour (Poids Brut + Quantité totale).");
@@ -520,7 +459,11 @@ _onMatched: function (oEvent) {
             sap.m.MessageBox.error("❌ Erreur lors de la lecture de la bascule.");
           }
         });
-      },
+      }
+      
+      
+      
+      ,
       onDepartCamion: function () {
         const oView = this.getView();
         const oModel = oView.getModel();
@@ -540,6 +483,10 @@ _onMatched: function (oEvent) {
         const sIdcommande = oData.Idcommande;
         const sIdchauffeur = oData.Idchauffeur;
       
+        const sDateTime = new Date().toISOString().slice(0, 16).replace("T", " ");
+        oFluxModel.setProperty("/Datedepart", sDateTime); // ✅ affichage en haut
+        oFluxModel.setProperty("/Status", "Terminé");
+      
         const aItems = oTable.getBinding("items").getContexts();
         const aUpdates = [];
       
@@ -554,11 +501,10 @@ _onMatched: function (oEvent) {
             const sPath = `/ZCDS_flux(Idflux='${row.Idflux}',Idcommande='${row.Idcommande}',Idchauffeur=${row.Idchauffeur},Idarticle='${row.Idarticle}')`;
       
             const oDataToUpdate = {
+              Datedepart: sDateTime,
               Status: "Terminé",
-               Commentaire: oFluxModel.getProperty("/Commentaire") || ""
+              Commentaire: oFluxModel.getProperty("/Commentaire") || ""
             };
-      
-            console.log("✅ Changement statut pour :", sPath);
       
             aUpdates.push(
               new Promise((resolve, reject) => {
@@ -573,17 +519,15 @@ _onMatched: function (oEvent) {
       
         Promise.all(aUpdates)
           .then(() => {
-            // ✅ Mise à jour UI
-            oFluxModel.setProperty("/Status", "Terminé");
             this.byId("_IDGenSelect").setSelectedKey("Terminé");
-      
-            sap.m.MessageToast.show("✔️ Statut changé à 'Terminé' pour tous les articles.");
             this.byId("smartTableFlux").rebindTable();
+            sap.m.MessageToast.show("✔️ Départ camion : date et statut enregistrés.");
           })
           .catch(() => {
-            sap.m.MessageBox.error("❌ Erreur lors de la mise à jour du statut.");
+            sap.m.MessageBox.error("❌ Erreur lors de la mise à jour du départ camion.");
           });
       }
+      
       ,     
       onCancelInfo: function () {
         const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -604,10 +548,20 @@ _onMatched: function (oEvent) {
           // Par sécurité, on vide les résultats si pas de filtre
           oBindingParams.filters = [new sap.ui.model.Filter("Idcommande", "EQ", "__NONE__")];
         }
-      }
+      },
       
+onViewBonPesee: function () {
+
+},
+
+
+
+
+
+
       
         
       });
     });
+    
     

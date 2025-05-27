@@ -1,7 +1,8 @@
 sap.ui.define([
   "sap/ui/core/mvc/Controller",
-  "sap/ui/model/json/JSONModel"
-], function(Controller, JSONModel) {
+  "sap/ui/model/json/JSONModel",
+  "sap/ui/core/format/DateFormat"
+], function (Controller, JSONModel, DateFormat) {
   "use strict";
 
   return Controller.extend("projectsd2.controller.Dashboard", {
@@ -11,22 +12,29 @@ sap.ui.define([
         totalFlux: 0,
         totalChargement: 0,
         totalTermine: 0,
+        currentDate: new Date(),
         chartData: []
       });
 
       this.getView().setModel(oDashboardModel, "dashboard");
       this._loadFluxStats();
     },
-    
+
+    onAfterRendering: function () {
+      this.byId("_IDGenGenericTile").addStyleClass("kpiTile fluxTile");
+      this.byId("_IDGenGenericTile1").addStyleClass("kpiTile chargementTile");
+      this.byId("_IDGenGenericTile2").addStyleClass("kpiTile termineTile");
+    },
+
     _loadFluxStats: function () {
-   
       const oModel = this.getOwnerComponent().getModel();
- // ODataModel
       const oDashboardModel = this.getView().getModel("dashboard");
+
       if (!oModel) {
         console.error("❌ Modèle OData non défini !");
         return;
       }
+
       oModel.read("/ZCDS_flux", {
         success: function (oData) {
           const results = oData.results;
@@ -48,6 +56,14 @@ sap.ui.define([
           sap.m.MessageBox.error("Erreur lors de la lecture des données ZCDS_flux.");
         }
       });
+    },
+
+    formatDate: function (oDate) {
+      if (!oDate) return "";
+      const oDateFormat = DateFormat.getDateTimeInstance({
+        pattern: "dd/MM/yyyy 'à' HH:mm"
+      });
+      return oDateFormat.format(oDate);
     }
 
   });

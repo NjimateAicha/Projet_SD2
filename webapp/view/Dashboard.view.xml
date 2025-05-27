@@ -1,61 +1,112 @@
-<mvc:View
-  controllerName="projectsd2.controller.Dashboard"
-  displayBlock="true"
-  xmlns:mvc="sap.ui.core.mvc"
-  xmlns="sap.m"
-  xmlns:viz="sap.viz.ui5.controls"
-  xmlns:viz.data="sap.viz.ui5.data"
-  xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+<mvc:View 
+    controllerName="projectsd2.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"   
+    xmlns="sap.m"   
+    xmlns:core="sap.ui.core"   
+    xmlns:viz="sap.viz.ui5.controls"   
+    xmlns:vizui5="sap.viz.ui5"   
+    xmlns:vizframe="sap.viz.ui5.controls.VizFrame">
 
-  <Page id="mainPageeee" showHeader="false" class="sapUiResponsivePadding">
-    <VBox id="_IDGenVBox4" class="sapUiSmallMargin">
+    <Page id="dashboardPageFlux" 
+          title="Pont Bascule - Suivi des Flux" 
+          class="sapUiResponsivePadding dashboardPage">
 
-      <!-- Tuiles KPI -->
-      <HBox id="_IDGenHBox" justifyContent="SpaceAround" class="sapUiSmallMarginBottom">
-        <GenericTile id="_IDGenGenericTile" header="Total Flux" subheader="Enregistrés" class="sapUiSmallMargin">
-          <TileContent id="_IDGenTileContent">
-            <NumericContent id="_IDGenNumericContent" value="{dashboard>/totalFlux}" icon="sap-icon://shipping-status" />
-          </TileContent>
-        </GenericTile>
+        <content>
+            <VBox id="dashboardContainerFlux" class="dashboardContainer">
 
-        <GenericTile id="_IDGenGenericTile1" header="En Chargement" subheader="Flux en cours" class="sapUiSmallMargin">
-          <TileContent id="_IDGenTileContent1">
-            <NumericContent id="_IDGenNumericContent1" value="{dashboard>/totalChargement}" icon="sap-icon://action-settings" valueColor="Critical" />
-          </TileContent>
-        </GenericTile>
+                <!-- ✅ En-tête -->
+                <HBox id="_IDGenHBox" justifyContent="SpaceBetween" alignItems="Center" class="headerSection">
+                    <VBox id="_IDGenVBox4">
+                        <Title id="_IDGenTitle1" text="Tableau de Suivi Flux" level="H1" class="mainTitle"/>
+                        <Text id="_IDGenText1" text="Vue globale des flux opérationnels" class="subTitle"/>
+                    </VBox>
+                    <HBox id="_IDGenHBox1" alignItems="Center" class="dateSection">
+                        <Text id="_IDGenText3" text="{path: 'dashboard>/currentDate', formatter: '.formatDate'}" class="dateText"/>
+                    </HBox>
+                </HBox>
 
-        <GenericTile id="_IDGenGenericTile2" header="Terminés" subheader="Flux clôturés" class="sapUiSmallMargin">
-          <TileContent id="_IDGenTileContent2">
-            <NumericContent id="_IDGenNumericContent2" value="{dashboard>/totalTermine}" icon="sap-icon://complete" valueColor="Good" />
-          </TileContent>
-        </GenericTile>
-      </HBox>
+                <!-- ✅ KPI Flux -->
+                <Panel id="_IDGenPanel2" headerText="Indicateurs Clés de Livraison" class="kpiPanel">
+                    <VBox id="_IDGenVBox8">
 
-      <!-- Graphique -->
-      <viz:VizFrame
-        id="fluxChart"
-        width="100%"
-        height="400px"
-        uiConfig="{applicationSet:'fiori'}"
-        vizType="column">
+                        <!-- Rangée KPI -->
+                        <HBox  id="kpiRow1"  justifyContent="SpaceAround" wrap="Wrap" class="kpiRow">
+                            <GenericTile id="_IDGenGenericTile" header="Total Flux" subheader="Enregistrés"     class="kpiTile commandesTile">
+                                <TileContent id="_IDGenTileContent">
+                                    <NumericContent id="_IDGenNumericContent" value="{dashboard>/totalFlux}" 
+                                                    icon="sap-icon://shipping-status" 
+                                                    size="M" 
+                                                    valueColor="Neutral"/>
+                                </TileContent>
+                                
+                            </GenericTile>
 
-        <viz:dataset>
-          <viz.data:FlattenedDataset id="_IDGenFlattenedDataset" data="{dashboard>/chartData}">
-            <viz.data:dimensions>
-              <viz.data:DimensionDefinition id="_IDGenDimensionDefinition" name="Statut" value="{status}" />
-            </viz.data:dimensions>
-            <viz.data:measures>
-              <viz.data:MeasureDefinition id="_IDGenMeasureDefinition" name="Nombre" value="{count}" />
-            </viz.data:measures>
-          </viz.data:FlattenedDataset>
-        </viz:dataset>
+                  
 
-        <viz:feeds>
-          <viz.feeds:FeedItem id="_IDGenFeedItem1" uid="valueAxis" type="Measure" values="Nombre" />
-          <viz.feeds:FeedItem id="_IDGenFeedItem2" uid="categoryAxis" type="Dimension" values="Statut" />
-        </viz:feeds>
+                            <GenericTile id="_IDGenGenericTile1" header="En Chargement" subheader="Flux en cours" class="kpiTile articlesTile">
+                                <TileContent id="_IDGenTileContent1">
+                                    <NumericContent id="_IDGenNumericContent1" value="{dashboard>/totalChargement}" 
+                                                    icon="sap-icon://action-settings" 
+                                                    size="M" 
+                                                    valueColor="Critical"/>
+                                </TileContent>
+                            </GenericTile>
 
-      </viz:VizFrame>
-    </VBox>
-  </Page>
+                            <GenericTile id="_IDGenGenericTile2" header="Terminés" subheader="Flux clôturés"    class="kpiTile clientsTile">
+                                <TileContent id="_IDGenTileContent2">
+                                    <NumericContent id="_IDGenNumericContent2" value="{dashboard>/totalTermine}" 
+                                                    icon="sap-icon://complete" 
+                                                    size="M" 
+                                                    valueColor="Good"/>
+                                </TileContent>
+                            </GenericTile>
+                            
+                        </HBox>
+
+                    </VBox>
+                </Panel>
+
+                <!-- ✅ Section Graphique -->
+                <Panel id="_IDGenPanel3" headerText="Analyse Graphique des Flux" class="chartPanel">
+                    <VBox id="_IDGenVBox9" class="chartContainer">
+
+                        <VBox id="_IDGenVBox10" class="singleChartContainer">
+                            <HBox id="_IDGenHBox7" justifyContent="SpaceBetween" alignItems="Center" class="chartHeader">
+                                <Title id="_IDGenTitle2" text="Statut des Flux" level="H3" class="chartTitle"/>
+                                <Button id="_IDGenButton8" icon="sap-icon://full-screen" press="onExpandChart" type="Transparent" class="expandButton"/>
+                            </HBox>
+
+                            <viz:VizFrame 
+                                id="fluxChartStyled"
+                                width="100%" 
+                                height="400px" 
+                                uiConfig="{applicationSet:'fiori'}"
+                                vizType="column"
+                                class="elegantChart">
+
+                                <viz:dataset>
+                                    <viz.data:FlattenedDataset id="_IDGenFlattenedDataset" data="{dashboard>/chartData}" xmlns:viz.data="sap.viz.ui5.data">
+                                        <viz.data:dimensions>
+                                            <viz.data:DimensionDefinition id="_IDGenDimensionDefinition" name="Statut" value="{status}" />
+                                        </viz.data:dimensions>
+                                        <viz.data:measures>
+                                            <viz.data:MeasureDefinition id="_IDGenMeasureDefinition" name="Nombre" value="{count}" />
+                                        </viz.data:measures>
+                                    </viz.data:FlattenedDataset>
+                                </viz:dataset>
+
+                                <viz:feeds>
+                                    <viz.feeds:FeedItem id="_IDGenFeedItem1" uid="valueAxis" type="Measure" values="Nombre" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"/>
+                                    <viz.feeds:FeedItem id="_IDGenFeedItem2" uid="categoryAxis" type="Dimension" values="Statut" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"/>
+                                </viz:feeds>
+
+                            </viz:VizFrame>
+                        </VBox>
+
+                    </VBox>
+                </Panel>
+
+            </VBox>
+        </content>
+    </Page>
 </mvc:View>
