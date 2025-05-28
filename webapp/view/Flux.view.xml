@@ -98,15 +98,15 @@
         <HBox id="_IDGenHBox4" justifyContent="SpaceAround" class="sapUiSmallMarginTop">
           <VBox id="_IDGenVBox3" alignItems="Center">
             <Text id="_IDGenText" text="Bon de Préparation" class="sapUiSmallMarginBottom" />
-            <Button id="_IDGenButton7" icon="sap-icon://pdf-attachment" press="onViewBonPesee" />
+            <Button id="_IDGenButton7" icon="sap-icon://pdf-attachment" press="onPrin1" />
           </VBox>
            <VBox id="_IDGenVBox45" alignItems="Center">
             <Text id="_IDGenText42" text="Bon de Pesée" class="sapUiSmallMarginBottom" />
-            <Button id="_IDGenButTton9" icon="sap-icon://pdf-attachment" press="onViewBonPesée" />
+            <Button id="_IDGenButTton9" icon="sap-icon://pdf-attachment" press="onPrint" />
           </VBox>
           <VBox id="_IDGenVBox5" alignItems="Center">
             <Text id="_IDGenText2" text="Bon de Livraison" class="sapUiSmallMarginBottom" />
-            <Button id="_IDGenButton9" icon="sap-icon://pdf-attachment" press="onViewBonReception" />
+            <Button id="_IDGenButton9" icon="sap-icon://pdf-attachment" press="onPrint2" />
           </VBox>
         </HBox>
       </Panel>
