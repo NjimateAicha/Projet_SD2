@@ -88,7 +88,15 @@
   <HBox id="_IDGenHBox6" justifyContent="End" class="sapUiSmallMargin">
     <Button id="_IDGenButton5" text="Sauvegarder Informations" type="Accept" icon="sap-icon://save" press="onSaveInfo" class="sapUiTinyMarginBegin" />
     <Button id="_IDGenButton6" text="Annuler" type="Reject" icon="sap-icon://cancel" press="onCancelInfo" class="sapUiTinyMarginBegin" />
-    <Button id="_IDGenButton97" text="Etat des Ecarts" type="Emphasized" icon="sap-icon://status-critical" press="onShowGapStatus" class="sapUiTinyMarginBegin" />
+    <Button 
+  id="_IDGenButton97"
+  text="État des Écarts"
+  type="Emphasized"
+  icon="sap-icon://status-critical"
+  press="onEnvoyerEmail"
+  enabled="{FluxModel>/isEcartsComputed}"
+  class="sapUiTinyMarginBegin" />
+
 </HBox>
 </Panel>
 

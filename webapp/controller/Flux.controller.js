@@ -14,6 +14,8 @@ sap.ui.define([
         
         // ✅ Initialise le modèle JSON pour lier les données
         const oFluxModel = new sap.ui.model.json.JSONModel({
+          Idflux:         "",      
+          Email:    "", 
           Datearrivee: "",
           Status: "",
           Datedepart: "",
@@ -23,7 +25,8 @@ sap.ui.define([
           Poidsnet: "",
           Tare: "",
           Poidsbrut: "",
-          Commentaire: ""
+          Commentaire: "",
+          isEcartsComputed: false 
         });
       
         this.getView().setModel(oFluxModel, "FluxModel");
@@ -39,8 +42,63 @@ sap.ui.define([
       }
       
 , 
+ 
+
+   onEnvoyerEmail: function () {
+      // 1) Sélection
+      const oTable = this.byId("tblFlux");
+      const oSel   = oTable.getSelectedItem();
+      if (!oSel) {
+        MessageToast.show("Veuillez sélectionner un flux avant d’envoyer l’email.");
+        return;
+      }
+       const oCtx    = oSel.getBindingContext();
+
+      const sEmail  = oCtx.getProperty("Email");    // champ email du client
+      const sIdflux = oCtx.getProperty("Idflux");         // identifiant du flux
+   
+    //  const sEcart  = oFM.getProperty("/EcartPoids");
+      const oFM    = this.getView().getModel("FluxModel");
+         const sEcart       = oFM.getProperty("/EcartPoids");
+
+  if (!oFM.getProperty("/isEcartsComputed")) {
+    return sap.m.MessageToast.show("Cliquez d’abord sur « Récupérer le poids Brut ».");
+  }
+
+      // 3) Préparation de sujet et corps
+        const sSubject = encodeURIComponent(`État des écarts — flux ${sIdflux}`);
+     
+   
+        const sBody    = encodeURIComponent(
+    `Bonjour,
+
+Suite à la pesée du camion pour le flux ${sIdflux}, voici le détail complet :
 
 
+1. Écart de pesée = Poids net – Poids déclaré = ${sEcart} kg  
+
+Merci de bien vouloir vérifier ces valeurs.  
+Si vous avez la moindre question, n’hésitez pas à nous contacter.
+
+Cordialement,
+    Sofalim `
+  );
+  
+
+      // 4) Construction de l’URL et ouverture
+      const sUrl = [
+        "https://mail.google.com/mail/?view=cm&fs=1",
+        "to="    + encodeURIComponent(sEmail),
+        "su="    + sSubject,
+        "body="  + sBody
+      ].join("&");
+      window.open(sUrl, "_blank");
+
+      // 5) Message de confirmation (facultatif)
+      MessageToast.show("Client mail ouvert dans un nouvel onglet.");
+    }      
+
+,
 _onMatched: function (oEvent) {
   const sIdcommande = oEvent.getParameter("arguments").Idcommande;
   const sIdchauffeur = oEvent.getParameter("arguments").Idchauffeur;
@@ -130,15 +188,34 @@ _onMatched: function (oEvent) {
         });
       }
       ,
-      _onMatchedWithParams: function (oEvent) {
-        const sIdcommande = oEvent.getParameter("arguments").Idcommande;
-        const sIdchauffeur = oEvent.getParameter("arguments").Idchauffeur;
+      // _onMatchedWithParams: function (oEvent) {
+      //   const sIdcommande = oEvent.getParameter("arguments").Idcommande;
+      //   const sIdchauffeur = oEvent.getParameter("arguments").Idchauffeur;
       
-        this._sIdcommande = sIdcommande;
-        this._sIdchauffeur = sIdchauffeur;
+      //   this._sIdcommande = sIdcommande;
+      //   this._sIdchauffeur = sIdchauffeur;
       
-        this.byId("smartTableFlux").rebindTable(); // ✅ recharge avec filtres dynamiques
-      }
+      //   this.byId("smartTableFlux").rebindTable(); 
+      //   // ✅ recharge avec filtres dynamiques
+      // }
+       _onMatchedWithParams: function (oEvent) {
+      const sIdcommande = oEvent.getParameter("arguments").Idcommande;
+      const sIdchauffeur = oEvent.getParameter("arguments").Idchauffeur;
+
+      // 1) Récupère le JSONModel "FluxModel"
+      const oFM = this.getView().getModel("FluxModel");
+
+   
+      oFM.setData({
+     
+        Idcommande:       sIdcommande,
+        Idchauffeur:      sIdchauffeur,
+        isEcartsComputed: false   
+      });
+
+      // 3) Rebinder la table pour rafraîchir les données
+      this.byId("smartTableFlux").rebindTable();
+    }
       ,      
     
  
@@ -447,6 +524,7 @@ _onMatched: function (oEvent) {
                 oFluxModel.setProperty("/Poidsnet", Poidsnet);
                 oFluxModel.setProperty("/PoidsDeclare", totalQuantite);
                 oFluxModel.setProperty("/EcartPoids", ecartPoids);
+                oFluxModel.setProperty("/isEcartsComputed", true); 
       
                 sap.m.MessageToast.show("✔️ Données mises à jour (Poids Brut + Quantité totale).");
               },
@@ -548,6 +626,7 @@ _onMatched: function (oEvent) {
           // Par sécurité, on vide les résultats si pas de filtre
           oBindingParams.filters = [new sap.ui.model.Filter("Idcommande", "EQ", "__NONE__")];
         }
+     
       },
       
 onViewBonPesee: function () {
