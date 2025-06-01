@@ -143,6 +143,11 @@
           "pattern":"OperClose",
           "name":"OperClose",
           "target":["TargetOperClose"]
+        },
+              {
+          "pattern":"Ecartpoids",
+          "name":"Ecartpoids",
+          "target":["TargetEcartpoids"]
         }
         
       ],
@@ -183,6 +188,13 @@
           "controlId": "app",
           "controlAggregation": "pages"
 
+        },
+        "TargetEcartpoids":{
+          "viewName": "Ecartpoids",
+          "viewId": "Ecartpoids",
+          "type": "XML",
+          "controlId": "app",
+          "controlAggregation": "pages"
         }
       
 

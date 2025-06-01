@@ -32,8 +32,13 @@
 
       <!-- TABLE FLUX -->
       <smartTable:SmartTable
+       smartFilterId="smartFilterBarChauffeur"
         id="smartTableOperations"
         entitySet="ZCDS_flux"
+       
+        
+      
+
         tableType="ResponsiveTable"
         useVariantManagement="false"
         useTablePersonalisation="true"

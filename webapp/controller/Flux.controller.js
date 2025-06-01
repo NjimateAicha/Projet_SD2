@@ -745,37 +745,66 @@ doc.text("Bon de Livraison : L" + idflux, 130, 17);
 
 
     
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.setDrawColor(0, 0, 0);
-doc.rect(startX + 3, startY + 70, 30, rowHeight, 'FD'); // filled blue
-doc.text("Produit", startX + 7, startY + 75);
-
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.rect(startX + 33, startY + 70, 35, rowHeight, 'FD'); // filled blue
-doc.text("Unite", startX + 40, startY + 75);
-
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.rect(startX + 68, startY + 70, 45, rowHeight, 'FD'); // filled blue
-doc.text("Poids", startX + 72, startY + 75);
-
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.rect(startX + 113, startY + 70, 30, rowHeight, 'FD'); // filled blue
-doc.text("Prix", startX + 115, startY + 75);
 
 
+const cellWidths = [30, 35, 45, 30, 30];
+const headers    = ["Produit","Poids","Unité","Prix"];
 
-    doc.rect(startX + 3, startY + 80, 30, rowHeight ); // Cadre général
-    doc.text(oData.Nomarticle || "-", startX + 7, startY + 85);
-    doc.rect(startX + 33, startY + 80, 35, rowHeight ); // Cadre général
-    doc.text(oData.Qunit, startX + 40, startY + 85);
-    // doc.rect(startX + 68, startY + 80, 45, rowHeight ); // Cadre général
-    // doc.text(oData.PoidsNet || "-", startX + 72, startY + 85);
-    // doc.rect(startX + 113, startY + 80, 30, rowHeight ); // Cadre général
-    // doc.text(oData.Quantite || "-", startX + 115, startY + 85);
-     doc.rect(startX + 68, startY + 80, 45, rowHeight ); // Cadre général
-    doc.text(oData.Poidsnet || "-", startX + 72, startY + 85);
-    doc.rect(startX + 113, startY + 80, 30, rowHeight ); // Cadre général
-    doc.text(oData.Prixunitaire || "-", startX + 115, startY + 85);
+const unloadBottom = startY + 42 + rowHeight*2;
+const headerY     = unloadBottom + 10;  // 10mm de marge
+
+// 1) Configure une fois la couleur de fond, de contour et du texte
+doc.setFillColor(173, 216, 230); // bleu clair
+doc.setDrawColor(0);             // contour noir
+// 1) Configure la couleur et le style AVANT la boucle
+doc.setDrawColor(0);             // contour noir
+doc.setTextColor(0);             // texte noir
+doc.setFont("helvetica", "bold").setFontSize(9);
+
+// 2) Redessiner chaque cellule d’en-tête avec un fond bleu clair
+let x = startX + 3;
+for (let i = 0; i < headers.length; i++) {
+  doc.setFillColor(173, 216, 230); // Appliquer à chaque itération
+  doc.rect(x, headerY, cellWidths[i], rowHeight, 'FD'); // FD = Fill puis Draw
+  doc.text(headers[i], x + 2, headerY + rowHeight - 2);
+  x += cellWidths[i];
+}
+
+
+const aItems       = oTable.getBinding("items").getContexts();
+let currentY       = headerY + rowHeight;
+const bottomMargin = doc.internal.pageSize.getHeight() - 30;
+
+doc.setFont("helvetica","normal");
+doc.setFontSize(9);
+aItems.forEach(ctx => {
+  const row = ctx.getObject();
+  if (row.Idcommande === oData.Idcommande) {
+    // saut de page si nécessaire
+    if (currentY + rowHeight > bottomMargin) {
+      doc.addPage();
+      currentY = 20;
+      // (optionnel : redessiner l'en-tête ici)
+    }
+    let cellX = startX + 3;
+    const values = [
+      row.Nomarticle || "-",
+       row.Poidsnet  || "-",
+     
+      row.Qunit   || "-",
+     
+      row.Prixtotal    || "-"
+      
+    ];
+    for (let i = 0; i < values.length; i++) {
+      doc.rect(cellX, currentY, cellWidths[i], rowHeight);
+      doc.text(String(values[i]), cellX + 2, currentY + rowHeight - 2);
+      cellX += cellWidths[i];
+    }
+    currentY += rowHeight;
+  }
+});
+
    
 
      function addFooter(doc) {
@@ -831,49 +860,7 @@ var pageBottomY = pageHeight - footerInfoHeight;
           doc.rect(145, sectionStartY, 60, sectionHeight);
           doc.text("Signature Client :", 147, sectionStartY + 5);
    
-         
-    /** ---------- ARTICLES ---------- */
-    // let articlesY = startY + rowHeight * 4;
-    // let articleCounter = 0;
-    // const seenArticles = {};
-
-    // doc.rect(startX, articlesY, 50, rowHeight);
-    // doc.rect(startX + 50, articlesY, 130, rowHeight);
-    // doc.setFont("helvetica", "bold");
-    // doc.text("Article(s)", startX + 5, articlesY + 7);
-    // doc.setFont("helvetica", "normal");
-
-    // let currentY = articlesY + rowHeight;
-
-    // Pour les articles, tu dois vérifier la propriété exacte pour la liste d’articles.
-    // D’après ton exemple, tu as "Nomarticle" ou "Article" ? Ici je prends "Nomarticle" en string CSV.
-    // const articlesRaw = oData.Nomarticle || "";
-
-    // articlesRaw.split(" ").forEach(article => {
-    //     const trimmed = article.trim();
-    //     if (trimmed && !seenArticles[trimmed.toLowerCase()]) {
-    //         seenArticles[trimmed.toLowerCase()] = true;
-    //         articleCounter++;
-    //         const text = ` ${trimmed}`;
-    //         const lines = doc.splitTextToSize(text, 15);
-
-    //         if (currentY + (lines.length * rowHeight) > 280) {
-    //             doc.addPage();
-    //             currentY = 20;
-    //         }
-
-    //         lines.forEach((line, idx) => {
-    //             doc.text(line, startX + 55, currentY - 3);
-    //         });
-
-           // currentY += lines.length * rowHeight;
-    //     }
-    // });
-
-    // Redessiner les cadres en fonction de la hauteur réelle
-    // doc.rect(startX, articlesY, 50, currentY - articlesY);
-    // doc.rect(startX + 50, articlesY, 130, currentY - articlesY);
-
+ 
     sap.ui.core.BusyIndicator.hide();
     doc.save("Bon_de_Livraison.pdf");
 },
@@ -915,160 +902,150 @@ onPrin1:function(){
 
 
 
-    /** ---------- ENTÊTE ---------- */
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text("Bon de Preparation N° : " + (oData.Idflux), 120, 35);
+ 
+// 2) Entête du bon de préparation
+doc.setFont("helvetica", "bold");
+doc.setFontSize(14);
+doc.text("Bon de Préparation N° : " + oData.Idflux, 120, 35);
+doc.setFontSize(10);
+doc.text("Le : " + new Date().toLocaleDateString('fr-FR'), 180, 20, { align: "right" });
 
-    const formattedDate = new Date().toLocaleDateString('fr-FR');
-    doc.setFontSize(10);
-    doc.text("Le : " + formattedDate, 180, 20, { align: "right" });
+// 3) Cadre “Données pesée”
+const startX1    = 120;
+const startY1    = 40;
+const rowHeight1 = 5;
+doc.rect(startX1, startY1, 80, rowHeight1 * 4);
 
-    /** ---------- DONNÉES PESEE ---------- */
-        let startX1 = 120;
-    let startY1 = 40;
-    const rowHeight1 = 5;
-
-    doc.rect(startX1, startY1, 80, rowHeight1 * 4); // Cadre général
-
-    let startX = 20;
-    let startY = 70;
-    const rowHeight = 10;
-
-    doc.text("Lieu de chargement", startX + 5, startY + 40);
-    doc.rect(startX + 3, startY + 42, 80, rowHeight * 2); // Cadre général
-    doc.text("Sofalim", startX + 10, startY + 52);  
-    doc.text("Lieu de déchargement", startX + 100, startY + 40);
-    doc.rect(startX + 3, startY + 42, 160, rowHeight * 2); // Cadre général
-    doc.text(oData.Nomclient || "-", startX + 100, startY + 52);
-
-    doc.setFont("helvetica", "bold");
-    doc.text("Transporteur :", startX + 5, startY + 8);
-    doc.text("Véhicule :", startX + 5, startY + 18);
-    doc.text("Chauffeur :", startX + 5, startY + 28);
-
-    doc.setFont("helvetica", "normal");
-    doc.text(oData.Nomtransporteur || "-", startX + 55, startY + 8);  
-    doc.text(oData.Matricule || "-", startX + 55, startY + 18);
-    doc.text(oData.Nomchauffeur || "-", startX + 55, startY + 28);
-  
-
-
-    doc.setFont("helvetica", "bold");
-    doc.text("Date Entrée :", startX + 100, startY + 18);
-    doc.text("Date Sortie :", startX + 100, startY + 28);
-
-    doc.setFont("helvetica", "normal");
-
-    // Formattage des dates d'entrée et sortie, avec fallback
-    const dateEntree = oData.Dateentree
-        ? new Date(oData.Dateentree).toLocaleDateString('fr-FR')
-        : "N/A";
-    const dateSortie = oData.Datedepart
-        ? new Date(oData.Datedepart).toLocaleDateString('fr-FR')
-        : "N/A";
-
-    doc.text(dateEntree + " " + (oData.heur_entree || ""), startX + 140, startY + 18);
-    doc.text(dateSortie + " " + (oData.heur_depart || ""), startX + 140, startY + 28);
-
-
-    
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.setDrawColor(0, 0, 0);
-doc.rect(startX + 3, startY + 70, 30, rowHeight, 'FD'); // filled blue
-doc.text("N° Commande", startX + 7, startY + 75);
-
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.rect(startX + 33, startY + 70, 35, rowHeight, 'FD'); // filled blue
-doc.text("Code", startX + 40, startY + 75);
-
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.rect(startX + 68, startY + 70, 45, rowHeight, 'FD'); // filled blue
-doc.text("Designation", startX + 72, startY + 75);
-
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.rect(startX + 113, startY + 70, 30, rowHeight, 'FD'); // filled blue
-doc.text("Unite", startX + 115, startY + 75);
-
-doc.setFillColor(173, 216, 230); // Light blue fill color
-doc.rect(startX + 143, startY + 70, 30, rowHeight, 'FD'); // filled blue
-doc.text("Poids", startX + 145, startY + 75);
-
-
-        doc.rect(startX + 3, startY + 80, 30, rowHeight ); // Cadre général
-    doc.text(oData.Idcommande || "-", startX + 7, startY + 85);
-    doc.rect(startX + 33, startY + 80, 35, rowHeight ); // Cadre général
-    doc.text(oData.Idarticle || "-", startX + 40, startY + 85);
-    doc.rect(startX + 68, startY + 80, 45, rowHeight ); // Cadre général
-    doc.text(oData.Nomarticle || "-", startX + 72, startY + 85);
-    doc.rect(startX + 113, startY + 80, 30, rowHeight ); // Cadre général
-    doc.text(oData.Qunit || "-", startX + 115, startY + 85);
-    doc.rect(startX + 143, startY + 80, 30, rowHeight ); // Cadre général
-    doc.text(oData.Quantite || "-", startX + 145, startY + 85);  
+// 4) Cadre “Chargement / Déchargement”
+const startX     = 20;
+const startY     = 70;
+const rowHeight  = 10;
+// Lieux
+doc.text("Lieu de chargement", startX - 5,  startY + 40);
+ doc.rect(startX - 7, startY + 42, 80, rowHeight * 2); // Cadre général
+    doc.text("Sofalim", startX , startY + 52);  
+    doc.text("Lieu de déchargement", startX + 90, startY + 40);
+    doc.rect(startX - 7, startY + 42, 160, rowHeight * 2); 
+doc.text(oData.Nomclient || "-", startX + 90, startY + 52);
 
 
 
-     function addFooter(doc) {
-            const pageHeight = doc.internal.pageSize.getHeight();
-            let footerStartY = pageHeight - 25;
-            doc.setFont("helvetica", "normal");
-            doc.setFontSize(7);
-            doc.setTextColor(0, 0, 0);
-            doc.text('S.A.R.L au capital de 90.000.000 Dirhams - R.C.: 238521 - T.P.: 34792098 - I.F.: 40399318 CNSS: 8790330 - I.C.E 000059183000037', 30, footerStartY);
-            footerStartY += 5;
-            doc.text('Siège social: 104, Boulevard Abdelmoumen et Angle Rue Murillo - Quartier Plateau - 20100 Casablanca - Maroc', 39, footerStartY);
-            footerStartY += 5;
-            doc.text('Usine: Douar Joualla - Caïdat Ouled Hriz Lgharbia - Commune Sahel Ouled Hriz - Province Berrechid-Maroc - Coordonnées GPS: 33.365670 - 2.853866', 24, footerStartY);
-            footerStartY += 5;
-            doc.text('Correspondances: BP 270 - Had Soualem - 26400 - Maroc // Tél.: +212 5.22.03.22.22 - Fax: +212 5.22.96.36.36 - Email: contact@sofalim.ma - www.sofalim.ma', 20, footerStartY);
-          }
 
-          addFooter(doc);
-         
-    /** ---------- ARTICLES ---------- */
-    // let articlesY = startY + rowHeight * 4;
-    // let articleCounter = 0;
-    // const seenArticles = {};
 
-    // doc.rect(startX, articlesY, 50, rowHeight);
-    // doc.rect(startX + 50, articlesY, 130, rowHeight);
-    // doc.setFont("helvetica", "bold");
-    // doc.text("Article(s)", startX + 5, articlesY + 7);
-    // doc.setFont("helvetica", "normal");
 
-    // let currentY = articlesY + rowHeight;
+ 
 
-    // Pour les articles, tu dois vérifier la propriété exacte pour la liste d’articles.
-    // D’après ton exemple, tu as "Nomarticle" ou "Article" ? Ici je prends "Nomarticle" en string CSV.
-    // const articlesRaw = oData.Nomarticle || "";
 
-    // articlesRaw.split(" ").forEach(article => {
-    //     const trimmed = article.trim();
-    //     if (trimmed && !seenArticles[trimmed.toLowerCase()]) {
-    //         seenArticles[trimmed.toLowerCase()] = true;
-    //         articleCounter++;
-    //         const text = ` ${trimmed}`;
-    //         const lines = doc.splitTextToSize(text, 15);
 
-    //         if (currentY + (lines.length * rowHeight) > 280) {
-    //             doc.addPage();
-    //             currentY = 20;
-    //         }
 
-    //         lines.forEach((line, idx) => {
-    //             doc.text(line, startX + 55, currentY - 3);
-    //         });
+// Transporteur / Véhicule / Chauffeur
+doc.setFont("helvetica", "bold");
+["Transporteur :", "Véhicule :", "Chauffeur :"].forEach((txt,i) =>
+  doc.text(txt, startX + 5, startY + 8 + 10*i)
+);
+doc.setFont("helvetica", "normal");
+[
+  oData.Nomtransporteur || "-",
+  oData.Matricule       || "-",
+  oData.Nomchauffeur    || "-"
+].forEach((val,i) =>
+  doc.text(val, startX + 55, startY + 8 + 10*i)
+);
 
-           // currentY += lines.length * rowHeight;
-    //     }
-    // });
+// Dates entrée / sortie
+doc.setFont("helvetica", "bold");
+doc.text("Date Entrée :", startX + 100, startY + 18);
+doc.text("Date Sortie  :", startX + 100, startY + 28);
+doc.setFont("helvetica", "normal");
+const dateEntree = oData.Dateentree
+  ? new Date(oData.Dateentree).toLocaleDateString('fr-FR')
+  : "N/A";
+const dateSortie = oData.Datedepart
+  ? new Date(oData.Datedepart).toLocaleDateString('fr-FR')
+  : "N/A";
+doc.text(`${dateEntree} ${oData.heur_entree||""}`, startX + 140, startY + 18);
+doc.text(`${dateSortie} ${oData.heur_depart||""}`, startX + 140, startY + 28);
 
-    // Redessiner les cadres en fonction de la hauteur réelle
-    // doc.rect(startX, articlesY, 50, currentY - articlesY);
-    // doc.rect(startX + 50, articlesY, 130, currentY - articlesY);
 
-    sap.ui.core.BusyIndicator.hide();
-    doc.save("Bon_de_preparation  .pdf");
+// après avoir tracé ton rect(startX+3, startY+42, …)
+
+
+
+const cellWidths = [30, 35, 45, 30, 30];
+const headers    = ["N° Commande","Code","Désignation","Poids","Unité"];
+
+const unloadBottom = startY + 42 + rowHeight*2;
+const headerY     = unloadBottom + 10;  // 10mm de marge
+
+// 1) Configure une fois la couleur de fond, de contour et du texte
+doc.setFillColor(173, 216, 230); // bleu clair
+doc.setDrawColor(0);             // contour noir
+// 1) Configure la couleur et le style AVANT la boucle
+doc.setDrawColor(0);             // contour noir
+doc.setTextColor(0);             // texte noir
+doc.setFont("helvetica", "bold").setFontSize(9);
+
+// 2) Redessiner chaque cellule d’en-tête avec un fond bleu clair
+let x = startX + 3;
+for (let i = 0; i < headers.length; i++) {
+  doc.setFillColor(173, 216, 230); // Appliquer à chaque itération
+  doc.rect(x, headerY, cellWidths[i], rowHeight, 'FD'); // FD = Fill puis Draw
+  doc.text(headers[i], x + 2, headerY + rowHeight - 2);
+  x += cellWidths[i];
+}
+
+
+
+// 5.2) Boucle sur tous les articles de la commande
+const aItems       = oTable.getBinding("items").getContexts();
+let currentY       = headerY + rowHeight;
+const bottomMargin = doc.internal.pageSize.getHeight() - 30;
+
+doc.setFont("helvetica","normal");
+doc.setFontSize(9);
+aItems.forEach(ctx => {
+  const row = ctx.getObject();
+  if (row.Idcommande === oData.Idcommande) {
+    // saut de page si nécessaire
+    if (currentY + rowHeight > bottomMargin) {
+      doc.addPage();
+      currentY = 20;
+      // (optionnel : redessiner l'en-tête ici)
+    }
+    let cellX = startX + 3;
+    const values = [
+      row.Idcommande || "-",
+      row.Idarticle   || "-",
+      row.Nomarticle  || "-",
+     
+      row.Quantite    || "-",
+       row.Qunit       || "-"
+    ];
+    for (let i = 0; i < values.length; i++) {
+      doc.rect(cellX, currentY, cellWidths[i], rowHeight);
+      doc.text(String(values[i]), cellX + 2, currentY + rowHeight - 2);
+      cellX += cellWidths[i];
+    }
+    currentY += rowHeight;
+  }
+});
+
+// 6) Pied de page
+function addFooter(d) {
+  const ph = d.internal.pageSize.getHeight();
+  let fy = ph - 25;
+  d.setFont("helvetica","normal").setFontSize(7).setTextColor(0);
+  d.text('S.A.R.L au capital de 90.000.000 Dirhams - R.C.: 238521 …', 30, fy);
+  fy += 5; d.text('Siège social: 104, Boulevard Abdelmoumen …', 39, fy);
+  fy += 5; d.text('Usine: Douar Joualla - Caïdat Ouled Hriz …', 24, fy);
+  fy += 5; d.text('Correspondances: BP 270 - Had Soualem …', 20, fy);
+}
+addFooter(doc);
+
+// 7) Sauvegarde
+sap.ui.core.BusyIndicator.hide();
+doc.save("Bon_de_preparation.pdf");
+
 },
       
 

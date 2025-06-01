@@ -1,0 +1,47 @@
+<mvc:View
+  controllerName="projectsd2.controller.Ecartpoids"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+
+  <Page id="_IDGenPage1" title="Liste des Écarts ">
+    <content>
+   
+      <Table
+  id="tblEcarts"
+  items="{/Ecarts}"
+  mode="SingleSelectLeft"
+  includeItemInSelection="true">
+
+        <columns>
+          <Column id="_IDGenColumn"><Text id="_IDGenText4" text="ID Flux"/></Column>
+          <Column id="_IDGenColumn1"><Text id="_IDGenText5" text="Poids Net"/></Column>
+          <Column id="_IDGenColumn2"><Text id="_IDGenText6" text="Poids Déclaré"/></Column>
+          <Column id="_IDGenColumn3"><Text id="_IDGenText7" text="Écart"/></Column>
+          <Column id="_IDGenColumn4"><Text id="_IDGenText8" text="Action"/></Column>
+        </columns>
+        <items>
+          <ColumnListItem id="_IDGenColumnListItem1">
+            <cells>
+              <Text id="_IDGenText9" text="{Idflux}" />
+              <Text id="_IDGenText10" text="{Poidsnet}" />
+              <Text id="_IDGenText11" text="{PoidsDeclare}" />
+              <ObjectStatus id="_IDGenObjectStatus"
+                text="{EcartPoids}"
+                state="{
+                  path: 'EcartPoids',
+                  formatter: '.getEcartState'
+                }" />
+              <Button id="_IDGenButton11"
+                icon="sap-icon://email"
+                tooltip="Envoyer Email"
+                press=".onEnvoyerEmail"
+                type="Emphasized" />
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+  </Page>
+
+</mvc:View>

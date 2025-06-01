@@ -43,7 +43,17 @@
                           text="Opérations Terminées" 
                           key="OperClose" 
                           icon="sap-icon://checklist-item" />
+                          <tnt:NavigationListItem
+  id="navItemEcarts"
+  text="État des Écarts"
+  key="Ecartpoids"
+  icon="sap-icon://compare" />
+
 </tnt:NavigationList>
+
+
+
+
         </VBox>
 
         <!-- CONTENU PRINCIPAL -->

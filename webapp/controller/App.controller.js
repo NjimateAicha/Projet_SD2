@@ -32,6 +32,10 @@ sap.ui.define([
               this.getOwnerComponent().getRouter().navTo("OperClose");
                 
                 break;
+        case "Ecartpoids":
+          this.getOwnerComponent().getRouter().navTo("Ecartpoids");
+          
+          break;
         default:
           console.warn("Clé de navigation inconnue :", sKey);
       }

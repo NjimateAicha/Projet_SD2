@@ -18,6 +18,7 @@
 
     
       <smartTable:SmartTable
+       smartFilterId="smartFilterBarOpercloce"
         id="smartTableOperClose"
         entitySet="ZCDS_flux"
         tableType="ResponsiveTable"

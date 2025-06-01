@@ -77,7 +77,7 @@
     <!-- TABLE -->
     <smartTable:SmartTable
       id="smartTableLivraison"
-      smartFilterId="smartFilterLivraison"
+      smartFilterId="smartFilterBar3"
       entitySet="ZCDS_commande"
       tableType="ResponsiveTable"
       useTablePersonalisation="true"
