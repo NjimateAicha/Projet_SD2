@@ -330,35 +330,113 @@ sap.ui.define([
   
   ,
   
-  onPressLancer: function () {
-    const oTable = this.byId("smartTableLivraison").getTable();
-    const oSelectedItem = oTable.getSelectedItem();
-  
-    if (!oSelectedItem) {
-      sap.m.MessageToast.show("Veuillez sélectionner une commande.");
-      return;
-    }
+// onPressLancer: function () {
+//   const oTable = this.byId("smartTableLivraison").getTable();
+//   const oSelectedItem = oTable.getSelectedItem();
 
-  
-    const oContext = oSelectedItem.getBindingContext();
-    const sCommandeId = oContext.getProperty("Idcommande");
-  
-    // ✅ Récupère l'ID chauffeur depuis ton input (match code)
-    const sIdChauffeur = this.byId("inIdChauffeur").getValue();
-    if (!sIdChauffeur) {
-      sap.m.MessageToast.show("Veuillez sélectionner un chauffeur.");
-      return;
-    }
-  
-    const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-    oRouter.navTo("Flux", {
-      Idcommande: sCommandeId,
-      Idchauffeur: sIdChauffeur
-    });
-  
+//   if (!oSelectedItem) {
+//     sap.m.MessageToast.show("Veuillez sélectionner une commande.");
+//     return;
+//   }
+
+//   const oContext = oSelectedItem.getBindingContext();
+//   const sCommandeId = oContext.getProperty("Idcommande");
+
+//   const sIdChauffeur = this.byId("inIdChauffeur").getValue();
+//   if (!sIdChauffeur) {
+//     sap.m.MessageToast.show("Veuillez sélectionner un chauffeur.");
+//     return;
+//   }
+
+//   const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+//   oRouter.navTo("Flux", {
+//     Idcommande: sCommandeId,
+//     Idchauffeur: sIdChauffeur
+//   });
+
+
+// }
+onPressLancer: function () {
+  const oTable = this.byId("smartTableLivraison").getTable();
+  const oSelectedItem = oTable.getSelectedItem();
+
+  if (!oSelectedItem) {
+    sap.m.MessageToast.show("Veuillez sélectionner une commande.");
+    return;
   }
-  
-  
+
+  const oContext = oSelectedItem.getBindingContext();
+  const sCommandeId = oContext.getProperty("Idcommande");
+  const sIdChauffeur = this.byId("inIdChauffeur").getValue();
+
+  if (!sIdChauffeur) {
+    sap.m.MessageToast.show("Veuillez sélectionner un chauffeur.");
+    return;
+  }
+
+  const oModel = this.getView().getModel();
+
+  oModel.read("/ZCDS_commande", {
+    filters: [new sap.ui.model.Filter("Idcommande", "EQ", sCommandeId)],
+    success: (oData) => {
+      let aPromises = [];
+      
+      oData.results.forEach((commandeLine) => {
+        const sKey = oModel.createKey("ZCDS_commande", {
+          Idcommande: commandeLine.Idcommande,
+          Idarticle: commandeLine.Idarticle
+        });
+
+        const p = new Promise((resolve, reject) => {
+          oModel.update("/" + sKey, {
+            Statuscommande: "EnCours"
+          }, {
+            success: resolve,
+            error: reject
+          });
+        });
+
+        aPromises.push(p);
+      });
+
+      Promise.all(aPromises)
+        .then(() => {
+          sap.m.MessageToast.show("Toutes les lignes mises à jour !");
+          
+          // ✅ Rebind table ici
+          const oSmartTable = this.byId("smartTableLivraison");
+          oSmartTable.rebindTable();
+
+          // ✅ Navigation
+          const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          oRouter.navTo("Flux", {
+            Idcommande: sCommandeId,
+            Idchauffeur: sIdChauffeur
+          });
+        })
+        .catch(() => {
+          sap.m.MessageToast.show("Erreur lors de la mise à jour.");
+        });
+    },
+    error: () => {
+      sap.m.MessageToast.show("Erreur lors de la lecture des lignes de commande.");
+    }
+  });
+}
+
+
+,
+
+onBeforeRebindLivraison: function (oEvent) {
+  const oBindingParams = oEvent.getParameter("bindingParams");
+  oBindingParams.filters.push(
+    new sap.ui.model.Filter("Statuscommande", sap.ui.model.FilterOperator.EQ, "Disponible")
+  );
+}
+
+
+
+
   
   
       });

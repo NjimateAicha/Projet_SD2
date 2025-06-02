@@ -19,6 +19,7 @@ server:
           - scp: true
             path: /sap
             url: https://11b69711-9bcb-491b-b504-a9ba7e4b7e97.abap.us10.hana.ondemand.com
+            
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

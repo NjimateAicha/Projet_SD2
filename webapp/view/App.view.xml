@@ -17,10 +17,7 @@
                  class="logoImage" />
 
           <tnt:NavigationList id="_IDGenNavigationListt" itemSelect="onSideNavSelect" class="navList">
-            <!-- <tnt:NavigationListItem id="_IDGenNavigationListItemm" text="Dashboard" key="Dashboard" icon="sap-icon://bar-chart" />
-            <tnt:NavigationListItem id="_IDGenNavigationListItemm2" text="Opérations" key="Operations" icon="sap-icon://bar-chart" />
-            
-            <tnt:NavigationListItem id="_IDGenNavigationListItemm22" text="Opérations Terminée" key="OperClose" icon="sap-icon://bar-chart" /> -->
+          
            <tnt:NavigationListItem id="navItemDashboard" 
                           text="Dashboard" 
                           key="Dashboard" 

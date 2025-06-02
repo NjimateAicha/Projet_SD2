@@ -9,7 +9,9 @@
    
       <Table
   id="tblEcarts"
-  items="{/Ecarts}"
+  items="{ecartsModel>/Ecarts}"
+
+
   mode="SingleSelectLeft"
   includeItemInSelection="true">
 
@@ -23,11 +25,10 @@
         <items>
           <ColumnListItem id="_IDGenColumnListItem1">
             <cells>
-              <Text id="_IDGenText9" text="{Idflux}" />
-              <Text id="_IDGenText10" text="{Poidsnet}" />
-              <Text id="_IDGenText11" text="{PoidsDeclare}" />
-              <ObjectStatus id="_IDGenObjectStatus"
-                text="{EcartPoids}"
+            <Text id="_IDGenText9" text="{ecartsModel>Idflux}" />
+<Text id="_IDGenText10" text="{ecartsModel>Poidsnet}" />
+<Text id="_IDGenText11" text="{ecartsModel>PoidsDeclare}" />
+<ObjectStatus id="_IDGenObjectStatus1" text="{ecartsModel>EcartPoids}" 
                 state="{
                   path: 'EcartPoids',
                   formatter: '.getEcartState'
